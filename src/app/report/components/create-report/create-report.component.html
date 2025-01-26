@@ -1,0 +1,61 @@
+<div class="create-report-form">
+  <p class="page-title">Crea un nuovo report</p>
+  <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" class="form-container">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Titolo</mat-label>
+      <input matInput id="title" formControlName="title" required />
+      <mat-error *ngIf="reportForm.get('title')?.invalid && reportForm.get('title')?.touched">
+        Il titolo è obbligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Descrizione</mat-label>
+      <textarea matInput id="description" formControlName="description" required></textarea>
+      <mat-error *ngIf="reportForm.get('description')?.invalid && reportForm.get('description')?.touched">
+        La descrizione è obbligatoria.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Codice Fiscale del cittadino</mat-label>
+      <input matInput id="citizenCodiceFiscale" formControlName="citizenCodiceFiscale" required />
+      <mat-error *ngIf="reportForm.get('citizenCodiceFiscale')?.invalid && reportForm.get('citizenCodiceFiscale')?.touched">
+        Il codice fiscale è obbligatorio.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Categoria</mat-label>
+      <input matInput id="categoryName" formControlName="categoryName" required />
+      <mat-error *ngIf="reportForm.get('categoryName')?.invalid && reportForm.get('categoryName')?.touched">
+        La categoria è obbligatoria.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Zona</mat-label>
+      <input matInput id="zone" formControlName="zone" />
+      <mat-error *ngIf="reportForm.get('zone')?.hasError('required') && reportForm.get('zone')?.touched">
+        La zona è obbligatoria.
+      </mat-error>      
+    </mat-form-field>
+
+    <div class="file-upload">
+      <label for="fileInput" class="file-label">Allega File</label>
+      <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple />
+      <div class="file-list" *ngIf="selectedFiles.length > 0">
+        <p *ngFor="let file of selectedFiles">{{ file.name }}</p>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid">
+        Invia Report
+      </button>
+      <button mat-button color="accent" type="button" (click)="navigateToReports()">
+        Torna alla Home
+      </button>
+    </div>
+  </form>
+</div>

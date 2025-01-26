@@ -1,0 +1,19 @@
+form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 40rem;
+    @media (max-width: 768px) {
+        width: 85%;
+    }
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+.signup-button {
+    align-self: center;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}

@@ -1,0 +1,57 @@
+<div class="report-list">
+  <p class="page-title">Lista dei Report</p>
+   
+  <div class="filter-container">
+    <mat-form-field appearance="fill" class="filter-select">
+      <mat-label>Seleziona Categorie</mat-label>
+      <mat-select multiple [(value)]="selectedCategories" (selectionChange)="onFilterChange()">
+        <mat-option *ngFor="let category of categories" [value]="category.name">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" class="filter-select">
+      <mat-label>Seleziona Zone</mat-label>
+      <mat-select multiple [(value)]="selectedZones" (selectionChange)="onFilterChange()">
+        <mat-option *ngFor="let zone of zones" [value]="zone">
+          {{ zone }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngFor="let report of reports">
+    <mat-card class="report-card">
+      <mat-card-title class="report-title">{{ report.title }}</mat-card-title>
+      <mat-card-content class="report-description">{{ report.description }}</mat-card-content>
+      <p *ngIf="report.categoryName"><strong>Categoria:</strong> {{ report.categoryName }}</p>
+      <!-- <div *ngIf="authService.isAuthenticated() | async; else anonymous">
+        <p>Autore: {{ report.citizenNome }} {{ report.citizenCognome }}</p>
+      </div>
+      <ng-template #anonymous>
+        <p>Autore: Eseguire login per visualizzare l'autore del report</p>
+      </ng-template>   -->    
+      <!-- <p *ngIf="report.citizenNome"><strong>Cittadino:</strong> {{ report.citizenNome }} {{ report.citizenCognome }}</p> -->
+      <p><strong>Zona:</strong> {{ report.zone }}</p>
+      <!-- <button [disabled]="!(authService.isAuthenticated() | async)" (click)="likeReport(report.id)">
+        Mi piace
+      </button> -->
+      
+      <!-- Visualizza gli allegati se ci sono -->
+      <div *ngIf="report.attachments && report.attachments.length > 0">
+        <h4>Allegati:</h4>
+        <div *ngFor="let attachment of report.attachments">
+          <!-- <img *ngIf="isImage(attachment)" [src]="getAttachmentUrl(attachment)" (click)="enlargeImage(attachment)" />
+          <img *ngIf="isImage(attachment)" [src]="getAttachmentUrl(attachment)" />
+          <a *ngIf="!isImage(attachment)" [href]="getAttachmentUrl(attachment)" target="_blank">Scarica Allegato</a> -->
+        </div>
+      </div>      
+    </mat-card>
+  </div>
+</div>
+
+<button mat-fab color="primary" class="floating-button" (click)="navigateToCreateReport()">
+  ➕ Crea nuovo report
+</button>
+

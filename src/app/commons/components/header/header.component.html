@@ -1,0 +1,11 @@
+<div class="header">
+  <h1 class="title">La Mia Voce</h1>
+  <div>
+    <mat-slide-toggle
+      [checked]="isDarkMode"
+      (change)="toggleTheme($event.checked)"
+      color="accent"
+    ></mat-slide-toggle> 🌙
+  </div>  
+  <button mat-button *ngIf="isAuthenticated" (click)="logout()">Esci</button>
+</div>
