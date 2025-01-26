@@ -8,11 +8,15 @@ import { SignupComponent } from './auth/components/signup/signup.component';
 export const routes: Routes = [
   { path: '', redirectTo: '/reports', pathMatch: 'full' },
   { path: 'signup', component: SignupComponent },
-  { path: 'reports', component: ReportsComponent },
+  { 
+    path: 'reports',
+    component: ReportsComponent,
+    canActivate: [AuthGuard]
+  },
   { 
     path: 'create-report', 
     component: CreateReportComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard]
   },
 ];
 
