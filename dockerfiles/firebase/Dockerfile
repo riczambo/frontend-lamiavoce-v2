@@ -1,5 +1,6 @@
-FROM node:16.10
+FROM node:18.20
 
-RUN npm install -g firebase-tools
+RUN npm install -g firebase-tools@latest
 
-ENTRYPOINT ["/usr/local/bin/firebase"]
+ENTRYPOINT ["firebase"]
+CMD ["--help"]
