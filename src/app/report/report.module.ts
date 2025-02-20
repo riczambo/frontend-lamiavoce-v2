@@ -9,7 +9,6 @@ import { MatCardModule } from '@angular/material/card';
 import { AuthModule } from '../auth/auth.module';
 import { MatInputModule } from '@angular/material/input';
 
-
 @NgModule({
   declarations: [
     CreateReportComponent,

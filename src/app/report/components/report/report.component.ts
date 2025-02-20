@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../services/report.service';
-import { Report, ReportFilterDTO, Category, ReportDTO, AttachmentDTO } from '../../../commons/model/entity.model';
+import { Report, ReportFilterDTO, ReportDTO, AttachmentDTO } from '../../../commons/model/entity.model';
 import { Router } from '@angular/router';
 import { LoginComponent } from '../../../auth/components/login/login.component';
 
@@ -11,8 +11,8 @@ import { LoginComponent } from '../../../auth/components/login/login.component';
 })
 export class ReportsComponent implements OnInit {
   reports: ReportDTO[] = [];
-  categories: Category[] = [];
-  zones: string[] = ['San Bortolo', 'Tassina', 'Rovigo (intero comune)', 'San Pio X', 'Commenda', 'Sarzano'];
+  categories: string[] = ['Ambiente', 'Viabilità', 'Illuminazione', 'Rifiuti', 'Altro'];
+  zones: string[] = ['San Bortolo', 'Tassina', 'Centro', 'Rovigo (intero comune)', 'San Pio X', 'Commenda', 'Sarzano'];
 
   selectedCategories: string[] = [];
   selectedZones: string[] = [];
@@ -24,14 +24,13 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getReports();
-    this.getCategories();
   }
 
   getReports(): void {
     const filter: ReportFilterDTO = {};
   
     if (this.selectedCategories.length > 0) {
-      filter.categoryNames = this.selectedCategories;
+      filter.categories = this.selectedCategories;
     }
     if (this.selectedZones.length > 0) {
       filter.zones = this.selectedZones;
@@ -46,17 +45,6 @@ export class ReportsComponent implements OnInit {
       }
     );
   }  
-
-  getCategories(): void {
-    this.reportService.getCategories().subscribe(
-      (categories) => {
-        this.categories = categories;
-      },
-      (error) => {
-        console.error('Errore durante il recupero delle categorie:', error);
-      }
-    );
-  }
 
   onFilterChange(): void {
     this.getReports();

@@ -4,12 +4,11 @@
     align-items: center;
     padding: 1rem;
     background-color: var(--content-background-color);
-    color: var(--card-text-color);
 }
 
 .create-report-form {
     width: 100%;
-    max-width: 600px;
+    max-width: 35rem;
 }
 
 .form-container {
@@ -18,21 +17,57 @@
     gap: 1rem;
 }
 
-.full-width {
+.form-label {
     width: 100%;
+    mat-label {
+        color: var(--primary-color);
+    }
 }
 
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+    background-color: yellow !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-input-element,
+::ng-deep .mat-form-field-appearance-outline .mat-select-trigger {
+    background: transparent !important;
+}
+  
+
+//FORM ACTIONS BELOW
 .form-actions {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
     margin-top: 1rem;
+
+    button {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 8px;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+        &.mat-raised-button {
+            background-color: var(--primary-color);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        &.mat-button {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+
+            &:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+            }
+        }
+    }
 }
 
-button {
-    min-width: 100px;
-}
-
+//UPLOAD FILE
 .file-upload {
     margin-top: 1rem;
 }
@@ -47,10 +82,6 @@ button {
 
 .file-list {
     font-size: 0.9rem;
-    color: var(--card-text-color);
+    color: var(--text-color);
     margin-top: 0.5rem;
-}
-
-.file-list p {
-    margin: 0;
 }

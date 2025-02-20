@@ -11,6 +11,8 @@ import { ReportRequest } from '../../../commons/model/entity.model';
 })
 export class CreateReportComponent implements OnInit {
   reportForm!: FormGroup;
+  categories: string[] = ['Ambiente', 'Viabilità', 'Illuminazione', 'Rifiuti', 'Altro'];
+  zones: string[] = ['San Bortolo', 'Tassina', 'Centro', 'Rovigo (intero comune)', 'San Pio X', 'Commenda', 'Sarzano'];
   selectedFiles: File[] = [];
 
   constructor(
@@ -23,8 +25,8 @@ export class CreateReportComponent implements OnInit {
     this.reportForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
-      citizenCodiceFiscale: ['', [Validators.required, Validators.pattern('[A-Z0-9]{16}')]],
-      categoryName: ['', Validators.required],
+      citizenId: ['', [Validators.required, Validators.pattern('[A-Z0-9]{16}')]],
+      category: ['', Validators.required],
       zone: ['']
     });
   }
@@ -56,26 +58,25 @@ export class CreateReportComponent implements OnInit {
       const report: ReportRequest = {
         title: this.reportForm.value.title,
         description: this.reportForm.value.description,
-        citizenCodiceFiscale: this.reportForm.value.citizenCodiceFiscale,
-        categoryName: this.reportForm.value.categoryName
+        citizenId: this.reportForm.value.citizenId,
+        category: this.reportForm.value.category,
+        zone: this.reportForm.value.zone
       };
   
       formData.append('report', new Blob([JSON.stringify(report)], { type: 'application/json' }));
   
-      // Aggiungi gli allegati
       this.selectedFiles.forEach(file => {
         formData.append('attachments', file, file.name);
       });
   
-      // Invio la richiesta senza impostare manualmente Content-Type
-      this.reportService.createReport(formData).subscribe(
-        () => {
-          this.router.navigate(['/reports']);
-        },
-        error => {
-          console.error('Error creating report', error);
-        }
-      );
+      this.reportService.addReport(report)
+      .then(() => {
+        console.log('Report aggiunto con successo!');
+        this.router.navigate(['/reports']);
+      })
+      .catch(error => {
+        console.error('Errore durante la creazione del report:', error);
+      });
     }
   }  
 

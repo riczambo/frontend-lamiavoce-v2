@@ -9,7 +9,16 @@ import { ReportModule } from './report/report.module';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment.prod';
+import { NZ_I18N } from 'ng-zorro-antd/i18n';
+import { it_IT } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import it from '@angular/common/locales/it';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+registerLocaleData(it);
 
 
 @NgModule({
@@ -19,17 +28,22 @@ import { environment } from '../environments/environment.prod';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     AuthModule,
     CommonsModule,
     ReportModule,
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    FormsModule
   ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch())
+    provideHttpClient(withFetch()),
+    { provide: NZ_I18N, useValue: it_IT },
+    provideHttpClient()
   ],
   bootstrap: [AppComponent]
 })

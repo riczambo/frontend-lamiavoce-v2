@@ -12,24 +12,12 @@ export class Citizen {
   }
 }
 
-export class Category {
-  id: number;
-  name: string;
-  description: string;
-
-  constructor(id: number, name: string, description: string) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-  }
-}
-
 export class Report {
   id?: number;
   title: string;
   description: string;
   citizen: Citizen;
-  category: Category;
+  category: string;
   creationDate: string;
   zone: string;
   attachmentReferences?: string;
@@ -38,7 +26,7 @@ export class Report {
     title: string,
     description: string,
     citizen: Citizen,
-    category: Category,
+    category: string,
     creationDate: string,
     zone: string,
     attachmentReferences?: string,
@@ -58,19 +46,21 @@ export class Report {
 export class ReportRequest {
   title: string;
   description: string;
-  citizenCodiceFiscale: string;
-  categoryName: string;
+  citizenId: string;
+  category: string;
+  zone: string;
 
-  constructor(title: string, description: string, citizenCodiceFiscale: string, categoryName: string) {
+  constructor(title: string, description: string, citizenId: string, category: string, zone: string) {
     this.title = title;
     this.description = description;
-    this.citizenCodiceFiscale = citizenCodiceFiscale;
-    this.categoryName = categoryName;
+    this.citizenId = citizenId;
+    this.category = category;
+    this.zone = zone;
   }
 }
 
 export interface ReportFilterDTO {
-  categoryNames?: string[];
+  categories?: string[];
   zones?: string[];
 }
 
@@ -80,7 +70,7 @@ export class ReportDTO {
   description: string;
   citizenNome: string;
   citizenCognome: string;
-  categoryName: string;
+  category: string;
   creationDate: string;
   zone: string;
   attachments: AttachmentDTO[];
@@ -91,7 +81,7 @@ export class ReportDTO {
     description: string,
     citizenNome: string,
     citizenCognome: string,
-    categoryName: string,
+    category: string,
     creationDate: string,
     zone: string,
     attachments: AttachmentDTO[]
@@ -101,7 +91,7 @@ export class ReportDTO {
     this.description = description;
     this.citizenNome = citizenNome;
     this.citizenCognome = citizenCognome;
-    this.categoryName = categoryName;
+    this.category = category;
     this.creationDate = creationDate;
     this.zone = zone;
     this.attachments = attachments;

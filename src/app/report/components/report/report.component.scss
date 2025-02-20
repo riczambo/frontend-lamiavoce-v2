@@ -4,7 +4,7 @@
   align-items: center;
   padding: 1rem;
   background-color: var(--content-background-color);
-  color: var(--card-text-color);
+  color: var(--text-color);
 }
 
 .header {
@@ -56,8 +56,16 @@
 
 .report-description {
   font-size: 0.95rem;
-  color: var(--card-text-color);
   margin-bottom: 0.4rem;
+}
+
+.shape {
+  height: 300px;
+  position: relative;
+}
+
+nz-float-button {
+  position: absolute;
 }
 
 @media (max-width: 600px) {

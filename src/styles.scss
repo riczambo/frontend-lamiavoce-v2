@@ -1,17 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
-
 :root {
-    --primary-color: #1976d2;
-    --background-color: #f7f6f6;
-    --text-color: #070707;
-    --card-text-color: #070707;
+    --primary-color: #72a8df;
+    --background-color: #f6f6f7;
+    --text-color: #1e2636;
+    --special-text-color: #1c213b;
 }
 
 [data-theme='dark'] {
-    --primary-color: #5895c7;
+    --primary-color: #335383;
     --background-color: #25375e;
-    --text-color: #fcf9f9;
-    --card-text-color: #254d81;
+    --text-color: #1e2636;
+    --special-text-color: #f2f7fc;
 }
 
 body {
@@ -50,5 +48,5 @@ body {
     text-align: center;
     font-size: 1.7rem;
     font-weight: bold;
-    color: var(--primary-color);
+    color: var(--special-text-color);
 }

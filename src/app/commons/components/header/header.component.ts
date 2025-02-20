@@ -25,13 +25,16 @@ export class HeaderComponent {
     });
   }
 
-  toggleTheme(isDark: boolean): void {
-    this.isDarkMode = isDark;
-    this.themeService.setTheme(isDark ? 'dark' : 'light');
+  toggleTheme(checked: boolean): void {
+    this.isDarkMode = checked;
+    this.themeService.setTheme(checked ? 'dark' : 'light');
   }
 
   logout(): void {
     this.authState.logout();
+  }
+
+  login(): void {
     this.router.navigate(['login']);
   }
 }

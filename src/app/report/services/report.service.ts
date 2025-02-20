@@ -1,30 +1,38 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Report, Category, ReportDTO } from '../../commons/model/entity.model';
-import { ReportRequest, ReportFilterDTO } from '../../commons/model/entity.model';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ReportFilterDTO } from '../../commons/model/entity.model';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportService {
-  private reportUrl = 'http://localhost:8080/api/reports';
-  private categoriesUrl = 'http://localhost:8080/api/categories';
+  private reportsCollection = this.firestore.collection('reports');
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private firestore: AngularFirestore
+  ) {}
 
-  // Ottieni i report filtrati tramite filtro DTO
-  getReports(filter: ReportFilterDTO): Observable<ReportDTO[]> {
-    return this.http.post<ReportDTO[]>(this.reportUrl, filter);
+  addReport(report: any): Promise<any> {
+    return this.reportsCollection.add(report);
   }
 
-  // Crea un nuovo report
-  createReport(formData: FormData): Observable<void> {
-    return this.http.post<void>(`${this.reportUrl}/create`, formData);
-  }
-
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoriesUrl);
-  }
-  
+  getReports(filter?: ReportFilterDTO): Observable<any[]> {
+    return this.firestore.collection('reports', ref => {
+      let query: firebase.firestore.Query<firebase.firestore.DocumentData> = ref;
+      
+      if (filter) {
+        if (filter.categories && filter.categories.length > 0) {
+          query = query.where('category', 'in', filter.categories);
+        }
+        if (filter.zones && filter.zones.length > 0) {
+          query = query.where('zone', 'in', filter.zones);
+        }
+      }
+      
+      return query;
+    }).valueChanges({ idField: 'id' });
+  }  
 }
