@@ -1,69 +1,94 @@
 <div class="create-report-form">
   <p class="page-title">Crea nuova segnalazione</p>
   <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" class="form-container">
-    <mat-form-field appearance="outline" class="form-label">
-      <mat-label>Titolo</mat-label>
-      <input matInput id="title" formControlName="title" required />
-      <mat-error *ngIf="reportForm.get('title')?.invalid && reportForm.get('title')?.touched">
-        Il titolo è obbligatorio.
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="form-label">
-      <mat-label>Descrizione</mat-label>
-      <textarea matInput id="description" formControlName="description" required></textarea>
-      <mat-error *ngIf="reportForm.get('description')?.invalid && reportForm.get('description')?.touched">
-        La descrizione è obbligatoria.
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="form-label">
-      <mat-label>Codice Fiscale del cittadino</mat-label>
-      <input matInput id="citizenId" formControlName="citizenId" required />
-      <mat-error *ngIf="reportForm.get('citizenId')?.invalid && reportForm.get('citizenId')?.touched">
-        Il codice fiscale è obbligatorio.
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="form-label">
-      <mat-label>Categoria</mat-label>
-      <mat-select id="category" formControlName="category" required>
-        <mat-option *ngFor="let category of categories" [value]="category">
-          {{ category }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="reportForm.get('category')?.invalid && reportForm.get('category')?.touched">
-        La categoria è obbligatoria.
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline" class="form-label">
-      <mat-label>Zona</mat-label>
-      <mat-select id="zone" formControlName="zone" required>
-        <mat-option *ngFor="let zone of zones" [value]="zone">
-          {{ zone }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="reportForm.get('zone')?.hasError('required') && reportForm.get('zone')?.touched">
-        La zona è obbligatoria.
-      </mat-error>      
-    </mat-form-field>
-
-    <div class="file-upload">
-      <label for="fileInput" class="file-label">Allega File</label>
-      <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple />
-      <div class="file-list" *ngIf="selectedFiles.length > 0">
-        <p *ngFor="let file of selectedFiles">{{ file.name }}</p>
-      </div>
-    </div>
-
-    <div class="form-actions">
-      <button mat-raised-button color="primary" type="submit" [disabled]="reportForm.invalid">
-        Invia Report
-      </button>
-      <button mat-button color="accent" type="button" (click)="navigateToReports()">
-        Torna alla Home
-      </button>
-    </div>
+  
+    <!-- Titolo -->
+    <nz-form-item class="form-label">
+      <nz-form-label [nzRequired]="true" nzFor="title">Titolo</nz-form-label>
+      <nz-form-control>
+        <input nz-input id="title" formControlName="title" required />
+        <ng-container *ngIf="reportForm.get('title')?.invalid && reportForm.get('title')?.touched">
+          <div nz-form-explain>Il titolo è obbligatorio.</div>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Descrizione -->
+    <nz-form-item class="form-label">
+      <nz-form-label [nzRequired]="true" nzFor="description">Descrizione</nz-form-label>
+      <nz-form-control>
+        <textarea nz-input id="description" formControlName="description" required></textarea>
+        <ng-container *ngIf="reportForm.get('description')?.invalid && reportForm.get('description')?.touched">
+          <div nz-form-explain>La descrizione è obbligatoria.</div>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Codice Fiscale del cittadino -->
+    <nz-form-item class="form-label">
+      <nz-form-label [nzRequired]="true" nzFor="citizenId">Codice Fiscale del cittadino</nz-form-label>
+      <nz-form-control>
+        <input nz-input id="citizenId" formControlName="citizenId" required />
+        <ng-container *ngIf="reportForm.get('citizenId')?.invalid && reportForm.get('citizenId')?.touched">
+          <div nz-form-explain>Il codice fiscale è obbligatorio.</div>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Categoria -->
+    <nz-form-item class="form-label">
+      <nz-form-label [nzRequired]="true" nzFor="category">Categoria</nz-form-label>
+      <nz-form-control>
+        <nz-select id="category" formControlName="category" nzPlaceHolder="Seleziona categoria" required>
+          <nz-option *ngFor="let category of categories" [nzValue]="category" [nzLabel]="category"></nz-option>
+        </nz-select>
+        <ng-container *ngIf="reportForm.get('category')?.invalid && reportForm.get('category')?.touched">
+          <div nz-form-explain>La categoria è obbligatoria.</div>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Zona -->
+    <nz-form-item class="form-label">
+      <nz-form-label [nzRequired]="true" nzFor="zone">Zona</nz-form-label>
+      <nz-form-control>
+        <nz-select id="zone" formControlName="zone" nzPlaceHolder="Seleziona zona" required>
+          <nz-option *ngFor="let zone of zones" [nzValue]="zone" [nzLabel]="zone"></nz-option>
+        </nz-select>
+        <ng-container *ngIf="reportForm.get('zone')?.invalid && reportForm.get('zone')?.touched">
+          <div nz-form-explain>La zona è obbligatoria.</div>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <nz-form-item class="file-upload">
+      <nz-form-label nzFor="fileInput">Allega File</nz-form-label>
+      <nz-form-control>
+        <nz-upload
+          nzAction=""
+          [nzBeforeUpload]="beforeUpload"
+          nzListType="text"
+          [nzMultiple]="true"
+          (nzChange)="handleChange($event)">
+          <button nz-button>
+            <i nz-icon nzType="upload"></i>
+            <span>Carica File</span>
+          </button>
+        </nz-upload>
+      </nz-form-control>
+    </nz-form-item>
+  
+    <!-- Azioni del Form -->
+    <nz-form-item class="form-actions">
+      <nz-form-control>
+        <button nz-button nzType="primary" type="submit" [disabled]="reportForm.invalid">
+          Invia Report
+        </button>
+        <button nz-button nzType="default" type="button" (click)="navigateToReports()">
+          Torna alla Home
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  
   </form>
 </div>

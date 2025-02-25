@@ -1,63 +1,109 @@
 <div class="report-list">
   <p class="page-title">Lista segnalazioni</p>
-   
-  <div class="filter-container">
-    <mat-form-field appearance="fill" class="filter-select">
-      <mat-label>Seleziona Categorie</mat-label>
-      <mat-select multiple [(value)]="selectedCategories" (selectionChange)="onFilterChange()">
-        <mat-option *ngFor="let category of categories" [value]="category">
-          {{ category }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  
-    <mat-form-field appearance="fill" class="filter-select">
-      <mat-label>Seleziona Zone</mat-label>
-      <mat-select multiple [(value)]="selectedZones" (selectionChange)="onFilterChange()">
-        <mat-option *ngFor="let zone of zones" [value]="zone">
-          {{ zone }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
 
-  <div *ngFor="let report of reports">
+  <form class="filter-container">
+    <nz-form-item>
+      <nz-form-control>
+        <nz-form-label [nzRequired]="true" nzFor="category">Categoria</nz-form-label>
+        <nz-select
+          [(ngModel)]="selectedCategories" 
+          id="category"
+          formControlName="category"
+          nzMode="multiple" 
+          nzPlaceHolder="Categorie"
+          (ngModelChange)="onFilterChange()"
+          required>
+          <nz-option *ngFor="let category of categories" [nzLabel]="category" [nzValue]="category"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    
+    <nz-form-item>
+      <nz-form-control>
+        <nz-select 
+          [(ngModel)]="selectedZones" 
+          [nzMode]="'multiple'" 
+          [nzPlaceHolder]="'Zone'"
+          (ngModelChange)="onFilterChange()">
+          <nz-option *ngFor="let zone of zones" [nzLabel]="zone" [nzValue]="zone"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <!-- <form
+      class="input-wrapper"
+  >
+      <div
+          tuiGroup
+          class="group"
+      >
+          <div>
+              <tui-input
+                  formControlName="testValue"
+                  tuiHintContent="Write a number"
+                  [style.border-radius]="'inherit'"
+              >
+                  House
+                  <input
+                      placeholder="House"
+                      tuiTextfieldLegacy
+                  />
+              </tui-input>
+          </div>
+          <div>
+              <tui-multi-select
+                  formControlName="multiSelectControl"
+                  tuiHintContent="Write house building"
+                  [editable]="false"
+                  [rows]="1"
+                  [style.border-radius]="'inherit'"
+                  [tuiTextfieldLabelOutside]="true"
+              >
+                  Building
+                  <tui-data-list-wrapper
+                      *tuiDataList
+                      tuiMultiSelectGroup
+                      [items]="items"
+                  />
+              </tui-multi-select>
+          </div>
+          <div>
+              <tui-input
+                  formControlName="testValue3"
+                  tuiHintContent="Write an apartment number only"
+                  [style.border-radius]="'inherit'"
+              >
+                  Apartment
+                  <input
+                      placeholder="Apartment number"
+                      tuiTextfieldLegacy
+                  />
+              </tui-input>
+          </div>
+      </div>
+  </form> -->
+
+  <!-- <div *ngFor="let report of reports">
     <mat-card class="report-card">
       <mat-card-title class="report-title">{{ report.title }}</mat-card-title>
       <mat-card-content class="report-description">{{ report.description }}</mat-card-content>
       <p *ngIf="report.category"><strong>Categoria:</strong> {{ report.category }}</p>
-      <!-- <div *ngIf="authService.isAuthenticated() | async; else anonymous">
-        <p>Autore: {{ report.citizenNome }} {{ report.citizenCognome }}</p>
-      </div>
-      <ng-template #anonymous>
-        <p>Autore: Eseguire login per visualizzare l'autore del report</p>
-      </ng-template>   -->    
-      <!-- <p *ngIf="report.citizenNome"><strong>Cittadino:</strong> {{ report.citizenNome }} {{ report.citizenCognome }}</p> -->
-      <p><strong>Zona:</strong> {{ report.zone }}</p>
-      <!-- <button [disabled]="!(authService.isAuthenticated() | async)" (click)="likeReport(report.id)">
-        Mi piace
-      </button> -->
-      
-      <!-- Visualizza gli allegati se ci sono -->
-      <div *ngIf="report.attachments && report.attachments.length > 0">
-        <h4>Allegati:</h4>
-        <div *ngFor="let attachment of report.attachments">
-          <!-- <img *ngIf="isImage(attachment)" [src]="getAttachmentUrl(attachment)" (click)="enlargeImage(attachment)" />
-          <img *ngIf="isImage(attachment)" [src]="getAttachmentUrl(attachment)" />
-          <a *ngIf="!isImage(attachment)" [href]="getAttachmentUrl(attachment)" target="_blank">Scarica Allegato</a> -->
-        </div>
-      </div>      
+      <p><strong>Zona:</strong> {{ report.zone }}</p>     
     </mat-card>
+  </div> -->
+
+  <div *ngFor="let report of reports">
+    <nz-card class="report-card">
+      <p><strong>{{ report.title }}</strong></p>
+      <p class="report-description">{{ report.description }}</p>
+      <p><strong>Categoria:</strong> {{ report.category }}</p>
+      <p><strong>Zona:</strong> {{ report.zone }}</p>
+    </nz-card>
   </div>
+  
 </div>
 
-<button mat-fab color="primary" class="floating-button" (click)="navigateToCreateReport()">
-  ➕ Crea nuova segnalazione
+<button class="floating-button" nz-button nzType="primary" (click)="navigateToCreateReport()">
+  Crea segnalazione
 </button>
-
-<!-- <div class="shape">
-  <nz-float-button nzShape="square" style="right: 24px" nzType="primary" [nzIcon]="floatButtonContent" (click)="navigateToCreateReport()"></nz-float-button>
-  <ng-template #floatButtonContent>
-    Crea nuova segnalazione
-  </ng-template>
-</div> -->

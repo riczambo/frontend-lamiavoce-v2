@@ -9,6 +9,12 @@
 .create-report-form {
     width: 100%;
     max-width: 35rem;
+    margin: 0 auto;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .form-container {
@@ -19,57 +25,35 @@
 
 .form-label {
     width: 100%;
-    mat-label {
-        color: var(--primary-color);
+    ::ng-deep .mat-form-field-label {
+    color: var(--primary-color) !important;
     }
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
-    background-color: yellow !important;
+    background-color: transparent !important;
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-input-element,
-::ng-deep .mat-form-field-appearance-outline .mat-select-trigger {
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    border-color: var(--primary-color) !important;
+}
+
+/* Colore del testo e placeholder dell’input */
+::ng-deep .mat-input-element,
+::ng-deep .mat-select-trigger {
+    color: var(--text-color) !important;
     background: transparent !important;
 }
-  
 
-//FORM ACTIONS BELOW
-.form-actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 1rem;
-
-    button {
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-        font-weight: bold;
-        border-radius: 8px;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-
-        &.mat-raised-button {
-            background-color: var(--primary-color);
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        &.mat-button {
-            background-color: transparent;
-            color: var(--accent-color);
-            border: 2px solid var(--accent-color);
-
-            &:hover {
-            background-color: var(--accent-color);
-            color: #fff;
-            }
-        }
-    }
+::ng-deep .mat-error {
+    color: #f44336 !important; /* Oppure var(--error-color) */
 }
 
-//UPLOAD FILE
-.file-upload {
-    margin-top: 1rem;
+.form-actions {
+    button {
+        font-size: 1rem;
+        font-weight: bold;
+    }
 }
 
 .file-label {
@@ -84,4 +68,4 @@
     font-size: 0.9rem;
     color: var(--text-color);
     margin-top: 0.5rem;
-}
+}  

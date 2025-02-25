@@ -1,22 +1,8 @@
-export class Citizen {
-  id: number;
-  codiceFiscale: string; // Codice Fiscale del cittadino
-  nome: string;
-  cognome: string;
-
-  constructor(id: number, codiceFiscale: string, nome: string, cognome: string) {
-    this.id = id;
-    this.codiceFiscale = codiceFiscale;
-    this.nome = nome;
-    this.cognome = cognome;
-  }
-}
-
 export class Report {
   id?: number;
   title: string;
   description: string;
-  citizen: Citizen;
+  citizen: string;
   category: string;
   creationDate: string;
   zone: string;
@@ -25,7 +11,7 @@ export class Report {
   constructor(
     title: string,
     description: string,
-    citizen: Citizen,
+    citizen: string,
     category: string,
     creationDate: string,
     zone: string,

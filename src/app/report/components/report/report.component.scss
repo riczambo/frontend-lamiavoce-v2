@@ -12,18 +12,17 @@
   text-align: center;
 }
 
-.filter-container {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+p {
+  margin: 0 0 0.3rem;
 }
 
-.filter-select {
-  width: 250px;
-}
+/* .filter-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+} */
 
 .report-list {
   display: flex;
@@ -56,24 +55,15 @@
 
 .report-description {
   font-size: 0.95rem;
-  margin-bottom: 0.4rem;
-}
-
-.shape {
-  height: 300px;
-  position: relative;
-}
-
-nz-float-button {
-  position: absolute;
+  margin-bottom: 0.5rem;
 }
 
 @media (max-width: 600px) {
   .filter-container {
-    flex-direction: column;
+    flex-direction: row;
   }
 
-  .form-container, .filter-select {
+  .form-container {
     width: 100%;
   }
 }

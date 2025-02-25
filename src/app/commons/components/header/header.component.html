@@ -1,5 +1,5 @@
 <div class="header">
-  <h1 class="title">RovigoSegnala</h1>
+  <h1 class="app-title" routerLink="/reports">RovigoSegnala</h1>
   <div class="header-right">
     <button mat-button *ngIf="isAuthenticated" (click)="logout()">Logout</button>
     <button mat-button *ngIf="!isAuthenticated" (click)="login()">Login</button>

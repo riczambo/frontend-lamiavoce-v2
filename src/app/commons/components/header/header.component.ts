@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthStateService } from '../../services/auth-state.service';
 

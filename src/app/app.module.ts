@@ -37,14 +37,14 @@ registerLocaleData(it);
     AngularFireAuthModule,
     AngularFirestoreModule,
     FormsModule
-  ],
+],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
     { provide: NZ_I18N, useValue: it_IT },
     provideHttpClient()
-  ],
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

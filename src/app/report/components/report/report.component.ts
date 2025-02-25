@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../services/report.service';
-import { Report, ReportFilterDTO, ReportDTO, AttachmentDTO } from '../../../commons/model/entity.model';
+import { ReportFilterDTO, ReportDTO, AttachmentDTO } from '../../../commons/model/entity.model';
 import { Router } from '@angular/router';
-import { LoginComponent } from '../../../auth/components/login/login.component';
 
 @Component({
   selector: 'app-report',
@@ -11,8 +10,8 @@ import { LoginComponent } from '../../../auth/components/login/login.component';
 })
 export class ReportsComponent implements OnInit {
   reports: ReportDTO[] = [];
-  categories: string[] = ['Ambiente', 'Viabilità', 'Illuminazione', 'Rifiuti', 'Altro'];
-  zones: string[] = ['San Bortolo', 'Tassina', 'Centro', 'Rovigo (intero comune)', 'San Pio X', 'Commenda', 'Sarzano'];
+  protected readonly categories: string[] = ['Ambiente', 'Viabilità', 'Illuminazione', 'Rifiuti', 'Altro'];
+  protected readonly zones: string[] = ['San Bortolo', 'Tassina', 'Centro', 'Rovigo (intero comune)', 'San Pio X', 'Commenda', 'Sarzano'];
 
   selectedCategories: string[] = [];
   selectedZones: string[] = [];
@@ -53,18 +52,9 @@ export class ReportsComponent implements OnInit {
   navigateToCreateReport(): void {
     this.router.navigateByUrl('/create-report');
   }
-
-  /* getAttachmentUrl(attachment: AttachmentDTO): string {
-    return `/api/attachments/${attachment.id}`;
-  }   */
   
   isImage(attachment: AttachmentDTO): boolean {
     return attachment.contentType.startsWith('image/');
-  }  
-  
-  /* enlargeImage(attachment: AttachmentDTO): void {
-    const url = this.getAttachmentUrl(attachment);
-    window.open(url, '_blank');
-  } */
+  }
   
 }

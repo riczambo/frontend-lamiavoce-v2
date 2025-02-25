@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthRoutingModule } from './auth-routing.module';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { SignupComponent } from './components/signup/signup.component';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 @NgModule({
   declarations: [
@@ -19,10 +20,11 @@ import { SignupComponent } from './components/signup/signup.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NzButtonModule,
+    NzCheckboxModule,
+    NzFormModule,
+    NzInputModule,
     RouterModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
     AuthRoutingModule
   ],
   exports: [

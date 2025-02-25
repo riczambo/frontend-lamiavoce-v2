@@ -1,30 +1,42 @@
 <p class="page-title">Registrazione</p>
 
-<form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
-    <mat-form-field appearance="fill">
-      <mat-label>Nome</mat-label>
-      <input matInput type="text" name="firstName" ngModel required>
-    </mat-form-field>
-  
-    <mat-form-field appearance="fill">
-      <mat-label>Cognome</mat-label>
-      <input matInput type="text" name="lastName" ngModel required>
-    </mat-form-field>
-  
-    <mat-form-field appearance="fill">
-      <mat-label>Email</mat-label>
-      <input matInput type="email" name="email" ngModel required>
-    </mat-form-field>
+<form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)" nz-form [nzLayout]="'vertical'">
+  <nz-form-item>
+    <nz-form-label [nzFor]="'firstName'">Nome</nz-form-label>
+    <nz-form-control>
+      <input nz-input type="text" id="firstName" name="firstName" ngModel required />
+    </nz-form-control>
+  </nz-form-item>
 
-    <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput type="text" name="password" ngModel required>
-    </mat-form-field>
+  <nz-form-item>
+    <nz-form-label [nzFor]="'lastName'">Cognome</nz-form-label>
+    <nz-form-control>
+      <input nz-input type="text" id="lastName" name="lastName" ngModel required />
+    </nz-form-control>
+  </nz-form-item>
 
-    <mat-form-field appearance="fill">
-        <mat-label>Conferma password</mat-label>
-        <input matInput type="password" name="confirmPassword" ngModel required>
-    </mat-form-field>
-  
-    <button class='signup-button' mat-raised-button color="primary" type="submit" [disabled]="!signupForm.form.valid || !passwordsMatch(signupForm)">Invia</button>
-  </form>
+  <nz-form-item>
+    <nz-form-label [nzFor]="'email'">Email</nz-form-label>
+    <nz-form-control>
+      <input nz-input type="email" id="email" name="email" ngModel required />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzFor]="'password'">Password</nz-form-label>
+    <nz-form-control>
+      <input nz-input type="password" id="password" name="password" ngModel required />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzFor]="'confirmPassword'">Conferma Password</nz-form-label>
+    <nz-form-control>
+      <input nz-input type="password" id="confirmPassword" name="confirmPassword" ngModel required />
+    </nz-form-control>
+  </nz-form-item>
+
+  <button nz-button nzType="primary" type="submit" [disabled]="!signupForm.form.valid || !passwordsMatch(signupForm)">
+    Invia
+  </button>
+</form>

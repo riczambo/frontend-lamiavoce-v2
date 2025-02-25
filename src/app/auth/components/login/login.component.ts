@@ -26,14 +26,14 @@ export class LoginComponent {
 
   login() {
     this.isLoggingIn = true;
-    this.authService.signIn({
-      email: this.loginForm.value.email,
-      password: this.loginForm.value.password
-    }).subscribe(() => {
-      this.router.navigate(['/reports']);
-    }, (error: any) => {
-      this.isLoggingIn = false;
-    })
+    if (this.loginForm.valid) {
+      this.authService.signIn({
+        email: this.loginForm.value.email,
+        password: this.loginForm.value.password
+      }).subscribe(() => {
+        this.router.navigate(['/reports']);
+      })
+    }
   }
 
 }
