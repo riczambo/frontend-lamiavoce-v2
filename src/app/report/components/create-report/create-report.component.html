@@ -1,94 +1,89 @@
 <div class="create-report-form">
   <p class="page-title">Crea nuova segnalazione</p>
-  <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" class="form-container">
-  
-    <!-- Titolo -->
-    <nz-form-item class="form-label">
-      <nz-form-label [nzRequired]="true" nzFor="title">Titolo</nz-form-label>
-      <nz-form-control>
-        <input nz-input id="title" formControlName="title" required />
-        <ng-container *ngIf="reportForm.get('title')?.invalid && reportForm.get('title')?.touched">
-          <div nz-form-explain>Il titolo è obbligatorio.</div>
-        </ng-container>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <!-- Descrizione -->
-    <nz-form-item class="form-label">
-      <nz-form-label [nzRequired]="true" nzFor="description">Descrizione</nz-form-label>
-      <nz-form-control>
-        <textarea nz-input id="description" formControlName="description" required></textarea>
-        <ng-container *ngIf="reportForm.get('description')?.invalid && reportForm.get('description')?.touched">
-          <div nz-form-explain>La descrizione è obbligatoria.</div>
-        </ng-container>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <!-- Codice Fiscale del cittadino -->
-    <nz-form-item class="form-label">
-      <nz-form-label [nzRequired]="true" nzFor="citizenId">Codice Fiscale del cittadino</nz-form-label>
-      <nz-form-control>
-        <input nz-input id="citizenId" formControlName="citizenId" required />
-        <ng-container *ngIf="reportForm.get('citizenId')?.invalid && reportForm.get('citizenId')?.touched">
-          <div nz-form-explain>Il codice fiscale è obbligatorio.</div>
-        </ng-container>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <!-- Categoria -->
-    <nz-form-item class="form-label">
-      <nz-form-label [nzRequired]="true" nzFor="category">Categoria</nz-form-label>
-      <nz-form-control>
-        <nz-select id="category" formControlName="category" nzPlaceHolder="Seleziona categoria" required>
-          <nz-option *ngFor="let category of categories" [nzValue]="category" [nzLabel]="category"></nz-option>
-        </nz-select>
-        <ng-container *ngIf="reportForm.get('category')?.invalid && reportForm.get('category')?.touched">
-          <div nz-form-explain>La categoria è obbligatoria.</div>
-        </ng-container>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <!-- Zona -->
-    <nz-form-item class="form-label">
-      <nz-form-label [nzRequired]="true" nzFor="zone">Zona</nz-form-label>
-      <nz-form-control>
-        <nz-select id="zone" formControlName="zone" nzPlaceHolder="Seleziona zona" required>
-          <nz-option *ngFor="let zone of zones" [nzValue]="zone" [nzLabel]="zone"></nz-option>
-        </nz-select>
-        <ng-container *ngIf="reportForm.get('zone')?.invalid && reportForm.get('zone')?.touched">
-          <div nz-form-explain>La zona è obbligatoria.</div>
-        </ng-container>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item class="file-upload">
-      <nz-form-label nzFor="fileInput">Allega File</nz-form-label>
-      <nz-form-control>
-        <nz-upload
-          nzAction=""
-          [nzBeforeUpload]="beforeUpload"
-          nzListType="text"
-          [nzMultiple]="true"
-          (nzChange)="handleChange($event)">
-          <button nz-button>
-            <i nz-icon nzType="upload"></i>
-            <span>Carica File</span>
-          </button>
-        </nz-upload>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <!-- Azioni del Form -->
-    <nz-form-item class="form-actions">
-      <nz-form-control>
-        <button nz-button nzType="primary" type="submit" [disabled]="reportForm.invalid">
-          Invia Report
-        </button>
-        <button nz-button nzType="default" type="button" (click)="navigateToReports()">
-          Torna alla Home
-        </button>
-      </nz-form-control>
-    </nz-form-item>
-  
+  <form
+      tuiAppearance="floating"
+      tuiCardLarge
+      tuiForm="m"
+      [formGroup]="creationReportForm"
+      (ngSubmit)="onSubmit()"
+  >
+      <header tuiHeader>
+          <h2 tuiTitle>
+              Cosa vorresti segnalare?
+              <span tuiSubtitle>Compila tutti i campi</span>
+          </h2>
+      </header>
+
+      <tui-notification appearance="warning">
+          <h3 tuiTitle>Attenzione</h3>
+          <ul class="tui-list tui-list_small" tuiSubtitle>
+            <li class="tui-list__item">Non inserire informazioni confidenziali nel titolo e nella descrizione.</li>
+            <li class="tui-list__item">Contenuti offensivi saranno segnalati e cancellati.</li>
+          </ul>
+      </tui-notification>
+
+      <tui-textfield>
+        <label tuiLabel>Titolo</label>
+        <input formControlName="title" tuiTextfield />
+      </tui-textfield>
+
+      <tui-textfield>
+        <label tuiLabel>Descrizione</label>
+        <input formControlName="description" tuiTextfield />
+      </tui-textfield>
+
+      <tui-textfield>
+        <label tuiLabel>Codice Fiscale</label>
+        <input formControlName="citizenId" tuiTextfield />
+      </tui-textfield>
+
+      <tui-select formControlName="category">Categoria
+        <input placeholder="Categoria" tuiTextfieldLegacy />
+        <tui-data-list-wrapper *tuiDataList [items]="reportService.categories" />
+      </tui-select>
+
+      <tui-select formControlName="zone">Zona
+        <input placeholder="Zona" tuiTextfieldLegacy />
+        <tui-data-list-wrapper *tuiDataList [items]="reportService.zones" />
+      </tui-select>
+
+      <footer>
+          <button appearance="secondary" tuiButton type="button" (click)="navigateToReports()">Annulla</button>
+          <button [disabled]="!creationReportForm.valid" tuiButton type="submit" (click)="open = true">Conferma</button>
+      </footer>
   </form>
 </div>
+
+<div class="overlay" *ngIf="isLoading"></div>
+<ng-template
+    let-observer
+    [tuiResponsiveDialogOptions]="options"
+    [(tuiResponsiveDialog)]="open"
+>
+    <ng-container *ngIf="!showSuccessMessage">
+        <h3 tuiTitle class="dialog-title">Stiamo caricando la tua segnalazione...</h3>
+        <tui-loader size="m"></tui-loader>
+    </ng-container>
+
+    <ng-container *ngIf="showSuccessMessage">
+        <h3 tuiTitle class="dialog-title">Segnalazione correttamente creata!</h3>
+        <button
+            tuiButton
+            appearance="primary"
+            type="button"
+            (click)="observer.complete(); navigateToReports()"
+        >
+            Torna alla homepage
+        </button>
+    </ng-container>
+</ng-template>
+
+<!-- <label tuiLabel>
+        <input
+            formControlName="subscribe"
+            tuiSwitch
+            type="checkbox"
+        />
+        Ricevi eventuali aggiornamenti sulla tua segnalazione
+        <tui-icon tuiTooltip="Non riceverai mail spam, giurin giurello!" />
+      </label> -->

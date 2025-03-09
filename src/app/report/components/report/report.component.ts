@@ -2,39 +2,49 @@ import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../services/report.service';
 import { ReportFilterDTO, ReportDTO, AttachmentDTO } from '../../../commons/model/entity.model';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { tuiDropdownAnimation, tuiFadeIn } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
-  styleUrls: ['./report.component.scss']
+  styleUrls: ['./report.component.less'],
+  animations: [tuiFadeIn, tuiDropdownAnimation]
 })
 export class ReportsComponent implements OnInit {
+  filterForm!: FormGroup;
   reports: ReportDTO[] = [];
-  protected readonly categories: string[] = ['Ambiente', 'Viabilità', 'Illuminazione', 'Rifiuti', 'Altro'];
-  protected readonly zones: string[] = ['San Bortolo', 'Tassina', 'Centro', 'Rovigo (intero comune)', 'San Pio X', 'Commenda', 'Sarzano'];
-
-  selectedCategories: string[] = [];
-  selectedZones: string[] = [];
 
   constructor(
-    private reportService: ReportService,
-    private router: Router
+    public reportService: ReportService,
+    private router: Router,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.filterForm = this.fb.group({
+      selectCategorie: [[]],
+      selectZone: [[]]
+    });
+
+    this.filterForm.valueChanges.subscribe(values => {
+      this.onFilterChange();
+    });
+
     this.getReports();
   }
 
   getReports(): void {
     const filter: ReportFilterDTO = {};
-  
-    if (this.selectedCategories.length > 0) {
-      filter.categories = this.selectedCategories;
+    const { selectCategorie, selectZone } = this.filterForm.value;
+
+    if (selectCategorie && selectCategorie.length > 0) {
+      filter.categories = selectCategorie;
     }
-    if (this.selectedZones.length > 0) {
-      filter.zones = this.selectedZones;
+    if (selectZone && selectZone.length > 0) {
+      filter.zones = selectZone;
     }
-  
+
     this.reportService.getReports(filter).subscribe(
       (reports) => {
         this.reports = reports;
@@ -43,10 +53,14 @@ export class ReportsComponent implements OnInit {
         console.error('Errore durante il recupero dei report:', error);
       }
     );
-  }  
+  }
 
   onFilterChange(): void {
     this.getReports();
+  }
+
+  flagContent(report: any): void {
+    console.log('Segnalazione per il report:', report);
   }
 
   navigateToCreateReport(): void {

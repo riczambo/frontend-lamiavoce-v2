@@ -3,17 +3,5 @@
   <div class="header-right">
     <button mat-button *ngIf="isAuthenticated" (click)="logout()">Logout</button>
     <button mat-button *ngIf="!isAuthenticated" (click)="login()">Login</button>
-    <nz-switch
-      [(ngModel)]="isDarkMode"
-      (ngModelChange)="toggleTheme($event)"
-      [nzCheckedChildren]="moonTpl"
-      [nzUnCheckedChildren]="sunTpl">
-    </nz-switch>
-    <ng-template #moonTpl>
-      <i nz-icon nzType="moon" nzTheme="outline"></i>
-    </ng-template>
-    <ng-template #sunTpl>
-      <i nz-icon nzType="sun" nzTheme="outline"></i>
-    </ng-template>
   </div>
 </div>

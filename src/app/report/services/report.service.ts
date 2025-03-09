@@ -10,6 +10,8 @@ import 'firebase/compat/firestore';
 })
 export class ReportService {
   private reportsCollection = this.firestore.collection('reports');
+  readonly categories: string[] = ['Ambiente', 'Illuminazione', 'Rifiuti', 'Urbanistica', 'Viabilità', 'Altro'];
+  readonly zones: string[] = ['San Bortolo', 'Tassina', 'Centro', 'Rovigo (intero comune)', 'San Pio X', 'Commenda', 'Sarzano'];
 
   constructor(
     private firestore: AngularFirestore

@@ -17,7 +17,7 @@ import { RouterModule } from '@angular/router';
     NzIconModule,
     NzSwitchModule,
     FormsModule,
-    RouterModule
+    RouterModule    
   ],
   exports: [
     HeaderComponent,

@@ -1,20 +1,17 @@
 import { Component } from '@angular/core';
-import { ThemeService } from '../../services/theme.service';
 import { Router } from '@angular/router';
 import { AuthStateService } from '../../services/auth-state.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.less']
 })
 export class HeaderComponent {
-  isDarkMode = true;
   isAuthenticated = false;
 
   constructor(
     private router: Router,
-    private themeService: ThemeService,
     private authState: AuthStateService
   ) {}
 
@@ -22,11 +19,6 @@ export class HeaderComponent {
     this.authState.isAuthenticated().subscribe((isLoggedIn) => {
       this.isAuthenticated = isLoggedIn;
     });
-  }
-
-  toggleTheme(checked: boolean): void {
-    this.isDarkMode = checked;
-    this.themeService.setTheme(checked ? 'dark' : 'light');
   }
 
   logout(): void {

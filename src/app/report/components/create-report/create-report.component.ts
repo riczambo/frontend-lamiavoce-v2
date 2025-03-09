@@ -1,85 +1,54 @@
-import { Component, OnInit } from '@angular/core';
-import { ReportService } from '../../services/report.service';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReportRequest } from '../../../commons/model/entity.model';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { Router } from '@angular/router';
+import { ReportService } from '../../services/report.service';
+import { TuiResponsiveDialogOptions } from '@taiga-ui/addon-mobile';
 
 @Component({
   selector: 'app-create-report',
   templateUrl: './create-report.component.html',
-  styleUrls: ['./create-report.component.scss']
+  styleUrls: ['./create-report.component.less']
 })
-export class CreateReportComponent implements OnInit {
-  reportForm!: FormGroup;
-  categories: string[] = ['Ambiente', 'Viabilità', 'Illuminazione', 'Rifiuti', 'Altro'];
-  zones: string[] = ['San Bortolo', 'Tassina', 'Centro', 'Rovigo (intero comune)', 'San Pio X', 'Commenda', 'Sarzano'];
-  selectedFiles: File[] = [];
+export class CreateReportComponent {
+  creationReportForm: FormGroup;
+  protected open = false;
+  protected isLoading = false;
+  protected showSuccessMessage = false;
+
+  protected readonly options: Partial<TuiResponsiveDialogOptions> = {
+    label: 'Creazione segnalazione',
+    size: 's',
+  };
 
   constructor(
     private fb: FormBuilder,
-    private reportService: ReportService,
+    public reportService: ReportService,
     private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.reportForm = this.fb.group({
+  ) {
+    this.creationReportForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
       citizenId: ['', [Validators.required, Validators.pattern('[A-Z0-9]{16}')]],
       category: ['', Validators.required],
-      zone: ['']
+      zone: ['', Validators.required]
     });
   }
 
-  beforeUpload = (file: NzUploadFile, fileList: NzUploadFile[]): boolean => {
-    const maxSize = 5 * 1024 * 1024; // 5 MB
-    const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-
-    if (file.size! > maxSize) {
-      console.error(`File ${file.name} troppo grande.`);
-      return false;
+  async onSubmit(): Promise<void> {
+    if (this.creationReportForm.invalid) {
+      return;
     }
-    if (!allowedTypes.includes(file.type!)) {
-      console.error(`File ${file.name} non supportato.`);
-      return false;
-    }
-    this.selectedFiles.push(file as unknown as File);
-    return false;
-  };
 
-  handleChange(info: NzUploadChangeParam): void {
-    if (info.file.status === 'removed') {
-      this.selectedFiles = this.selectedFiles.filter(f => f.name !== info.file.name);
-    }
-  }
-  
-  onSubmit(): void {
-    if (this.reportForm.valid) {
-      const formData = new FormData();
+    this.isLoading = true;
+    this.open = true;
 
-      const report: ReportRequest = {
-        title: this.reportForm.value.title,
-        description: this.reportForm.value.description,
-        citizenId: this.reportForm.value.citizenId,
-        category: this.reportForm.value.category,
-        zone: this.reportForm.value.zone
-      };
-
-      formData.append('report', new Blob([JSON.stringify(report)], { type: 'application/json' }));
-
-      this.selectedFiles.forEach(file => {
-        formData.append('attachments', file, file.name);
-      });
-
-      this.reportService.addReport(formData)
-        .then(() => {
-          console.log('Report aggiunto con successo!');
-          this.router.navigate(['/reports']);
-        })
-        .catch(error => {
-          console.error('Errore durante la creazione del report:', error);
-        });
+    try {
+      await this.reportService.addReport(this.creationReportForm.value);
+      this.showSuccessMessage = true;
+    } catch (error) {
+      console.error('Errore durante la creazione del report:', error);
+    } finally {
+      this.isLoading = false;
     }
   }
 

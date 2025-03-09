@@ -3,14 +3,57 @@ import { CommonModule } from '@angular/common';
 import { CreateReportComponent } from './components/create-report/create-report.component';
 import { ReportsComponent } from './components/report/report.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzUploadModule } from 'ng-zorro-antd/upload';
-import { NzCardModule } from 'ng-zorro-antd/card';
 import { AuthModule } from '../auth/auth.module';
+
+//Taiga UI
+import { 
+  TuiButton,
+  TuiGroup,
+  TuiIcon,
+  TuiHint,
+  TuiAppearance,
+  TuiTitle,
+  TuiError,
+  TuiNotification,
+  TuiTextfield,
+  TuiSelect,
+  TuiDataList,
+  TuiDialog,
+  TuiLoader,
+  TuiDialogOptions,
+  TuiDialogComponent,  
+  TuiLink
+} from '@taiga-ui/core';
+import { 
+  TuiInputModule,
+  TuiMultiSelectModule,
+  TuiMultiSelectOptionModule,
+  TuiSelectModule,
+  TuiSelectOptionModule,
+  TuiTextfieldControllerModule
+} from '@taiga-ui/legacy';
+import {
+  TuiBlockStatus,
+  TuiCardMedium,
+  TuiCardLarge,
+  TuiCell,
+  TuiForm,
+  TuiHeader
+} from '@taiga-ui/layout';
+import {
+  TuiButtonGroup,
+  TuiDataListWrapper,
+  TuiFade,
+  TuiFieldErrorPipe,
+  TuiIconBadge,
+  TuiSegmented,
+  TuiSwitch,
+  TuiTooltip
+} from '@taiga-ui/kit';
+import {TuiResponsiveDialog} from '@taiga-ui/addon-mobile';
+import type {TuiResponsiveDialogOptions} from '@taiga-ui/addon-mobile';
+import { RouterLink } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -21,14 +64,48 @@ import { AuthModule } from '../auth/auth.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NzButtonModule,
-    NzCheckboxModule,
-    NzFormModule,
-    NzInputModule,
-    NzSelectModule,
-    NzUploadModule,
-    NzCardModule,
-    AuthModule
+    BrowserAnimationsModule,
+    AuthModule,
+    RouterLink,
+
+    TuiLink,
+    TuiButton,
+    TuiResponsiveDialog,
+    TuiIcon,
+    TuiInputModule,
+    TuiSelectModule,
+    TuiSelect,
+    TuiSelectOptionModule,
+    TuiMultiSelectModule,
+    TuiMultiSelectOptionModule,
+    TuiTextfieldControllerModule,
+    TuiGroup,
+    TuiAppearance,
+    TuiDialogComponent,
+    TuiCardMedium,
+    TuiCardLarge,
+    TuiFade,
+    TuiDialog,
+    TuiLoader,
+    TuiTitle,
+    TuiCell,
+    TuiError,
+    TuiFieldErrorPipe,
+    TuiForm,
+    TuiHeader,
+    TuiNotification,
+    TuiSegmented,
+    TuiSwitch,
+    TuiTooltip,
+    TuiInputModule,
+    TuiButtonGroup,
+    TuiIconBadge,
+    ...TuiDataList,
+    ...TuiDataListWrapper,
+    ...TuiTextfield,
+    ...TuiHint,
+    ...TuiBlockStatus,
+    
   ],
   exports: [
     CreateReportComponent,

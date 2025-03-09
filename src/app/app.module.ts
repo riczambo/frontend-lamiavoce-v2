@@ -1,3 +1,5 @@
+import { NG_EVENT_PLUGINS } from "@taiga-ui/event-plugins";
+import { TuiRoot } from "@taiga-ui/core";
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -36,14 +38,16 @@ registerLocaleData(it);
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    FormsModule
-],
+    FormsModule,
+    TuiRoot
+  ],
   providers: [
     provideClientHydration(),
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
     { provide: NZ_I18N, useValue: it_IT },
-    provideHttpClient()
+    provideHttpClient(),
+    NG_EVENT_PLUGINS
 ],
   bootstrap: [AppComponent]
 })

@@ -1,109 +1,72 @@
-<div class="report-list">
+<div class="report-list" [@tuiFadeIn]>
   <p class="page-title">Lista segnalazioni</p>
-
-  <form class="filter-container">
-    <nz-form-item>
-      <nz-form-control>
-        <nz-form-label [nzRequired]="true" nzFor="category">Categoria</nz-form-label>
-        <nz-select
-          [(ngModel)]="selectedCategories" 
-          id="category"
-          formControlName="category"
-          nzMode="multiple" 
-          nzPlaceHolder="Categorie"
-          (ngModelChange)="onFilterChange()"
-          required>
-          <nz-option *ngFor="let category of categories" [nzLabel]="category" [nzValue]="category"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-    
-    <nz-form-item>
-      <nz-form-control>
-        <nz-select 
-          [(ngModel)]="selectedZones" 
-          [nzMode]="'multiple'" 
-          [nzPlaceHolder]="'Zone'"
-          (ngModelChange)="onFilterChange()">
-          <nz-option *ngFor="let zone of zones" [nzLabel]="zone" [nzValue]="zone"></nz-option>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
+  <form
+  [formGroup]="filterForm"
+  (ngSubmit)="onFilterChange()"
+  >
+    <div tuiGroup class="group">
+        <div>
+          <tui-multi-select
+            formControlName="selectCategorie"
+            tuiHintContent="Seleziona categorie da filtrare"
+            [editable]="false"
+            [rows]="1"
+            [style.border-radius]="'inherit'"
+            [tuiTextfieldLabelOutside]="true"
+            >Categorie<tui-data-list-wrapper
+                        *tuiDataList
+                        tuiMultiSelectGroup
+                        [items]="reportService.categories"/>
+          </tui-multi-select>
+        </div>
+        <div>
+          <tui-multi-select
+            formControlName="selectZone"
+            tuiHintContent="Seleziona zone da filtrare"
+            [editable]="false"
+            [rows]="1"
+            [style.border-radius]="'inherit'"
+            [tuiTextfieldLabelOutside]="true"
+            >Zone<tui-data-list-wrapper
+                    *tuiDataList
+                    tuiMultiSelectGroup
+                    [items]="reportService.zones"/>
+            </tui-multi-select>
+        </div>
+    </div>
   </form>
 
-  <!-- <form
-      class="input-wrapper"
-  >
-      <div
-          tuiGroup
-          class="group"
-      >
-          <div>
-              <tui-input
-                  formControlName="testValue"
-                  tuiHintContent="Write a number"
-                  [style.border-radius]="'inherit'"
-              >
-                  House
-                  <input
-                      placeholder="House"
-                      tuiTextfieldLegacy
-                  />
-              </tui-input>
-          </div>
-          <div>
-              <tui-multi-select
-                  formControlName="multiSelectControl"
-                  tuiHintContent="Write house building"
-                  [editable]="false"
-                  [rows]="1"
-                  [style.border-radius]="'inherit'"
-                  [tuiTextfieldLabelOutside]="true"
-              >
-                  Building
-                  <tui-data-list-wrapper
-                      *tuiDataList
-                      tuiMultiSelectGroup
-                      [items]="items"
-                  />
-              </tui-multi-select>
-          </div>
-          <div>
-              <tui-input
-                  formControlName="testValue3"
-                  tuiHintContent="Write an apartment number only"
-                  [style.border-radius]="'inherit'"
-              >
-                  Apartment
-                  <input
-                      placeholder="Apartment number"
-                      tuiTextfieldLegacy
-                  />
-              </tui-input>
-          </div>
-      </div>
-  </form> -->
-
-  <!-- <div *ngFor="let report of reports">
-    <mat-card class="report-card">
-      <mat-card-title class="report-title">{{ report.title }}</mat-card-title>
-      <mat-card-content class="report-description">{{ report.description }}</mat-card-content>
-      <p *ngIf="report.category"><strong>Categoria:</strong> {{ report.category }}</p>
-      <p><strong>Zona:</strong> {{ report.zone }}</p>     
-    </mat-card>
-  </div> -->
-
-  <div *ngFor="let report of reports">
-    <nz-card class="report-card">
-      <p><strong>{{ report.title }}</strong></p>
-      <p class="report-description">{{ report.description }}</p>
-      <p><strong>Categoria:</strong> {{ report.category }}</p>
-      <p><strong>Zona:</strong> {{ report.zone }}</p>
-    </nz-card>
+  <div *ngFor="let report of reports" tuiCardLarge tuiAppearance="floating" class="report-card" [@tuiDropdownAnimation]>
+    <button class="flag-button" (click)="flagContent(report)">
+      <tui-icon icon="@tui.flag" size="s"></tui-icon>
+    </button>
+    <span tuiTitle class="fade report-title">
+      {{report.title}}
+    </span>
+    <section class="report-description">{{report.description}}</section>
+    <p><strong>Categoria:</strong> {{ report.category }}</p>
+    <p><strong>Zona:</strong> {{ report.zone }}</p>
+  </div>
+  
+  <div *ngIf="reports.length === 0">
+    <tui-block-status>
+      <tui-icon icon="@tui.square-x" size="l"></tui-icon>
+      <h4>Nessuna segnalazione trovata</h4>
+    </tui-block-status>
   </div>
   
 </div>
 
-<button class="floating-button" nz-button nzType="primary" (click)="navigateToCreateReport()">
-  Crea segnalazione
-</button>
+<div 
+    tuiAppearance="floating"
+    tuiButtonGroup
+    class="floating-button"
+    [@tuiFadeIn]
+>
+    <button
+    type="button"
+    (click)="navigateToCreateReport()">
+        <tui-icon icon="@tui.circle-plus"></tui-icon>
+        Crea segnalazione
+    </button>
+</div>
