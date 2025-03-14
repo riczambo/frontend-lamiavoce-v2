@@ -4,14 +4,7 @@
   align-items: center;
   padding: 1rem;
   background-color: var(--main-bg-color);
-}
-
-.report-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  max-width: 40rem;
+  min-height: 100vh;
 }
 
 .report-card {
@@ -27,21 +20,29 @@
   }
 }
 
-.flag-button {
+.manage-buttons {
   position: absolute;
-  top: 1rem;
+  top: 1.3rem;
   right: 1rem;
-  background: transparent;
-  border: none;
-  color: #d3d3d3;
-  cursor: pointer;
-  padding: 5px;
-  font-size: inherit;
-  transition: color 0.3s ease;
+  gap: 0.5rem;
+  display: flex;
+  opacity: 0;
+  visibility: hidden;
 }
 
-.flag-button:hover {
-  color: #c03939;
+.report-card:hover .manage-buttons {
+  opacity: 1;
+  visibility: visible;
+}
+
+.manage-icon {
+  border: none;
+  color: #d3d3d3;
+}
+
+::ng-deep .manage-icon:hover tui-svg {
+  color: #c03939 !important;
+  background-color: #c03939 !important;
 }
 
 .report-title {
@@ -59,6 +60,7 @@
 
 [tuiCardLarge][data-space][data-space=normal] {
   --t-space: 0.3rem;
+  --t-radius: 0.75rem;
 }
 
 [tuiButtonGroup]>button tui-icon {

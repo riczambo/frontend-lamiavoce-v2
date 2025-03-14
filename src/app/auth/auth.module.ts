@@ -6,10 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthRoutingModule } from './auth-routing.module';
 import { SignupComponent } from './components/signup/signup.component';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { 
+  TuiInputModule,
+  TuiTextfieldControllerModule
+} from '@taiga-ui/legacy';
+import { TuiAppearance, TuiButton, TuiError, TuiTextfield } from '@taiga-ui/core';
+import { TuiFieldErrorPipe } from '@taiga-ui/kit';
+import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
 
 @NgModule({
   declarations: [
@@ -20,12 +23,17 @@ import { NzInputModule } from 'ng-zorro-antd/input';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NzButtonModule,
-    NzCheckboxModule,
-    NzFormModule,
-    NzInputModule,
     RouterModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    TuiInputModule,
+    TuiButton,
+    TuiError,
+    TuiAppearance,
+    TuiCardLarge,
+    TuiForm,
+    TuiFieldErrorPipe,
+    TuiTextfieldControllerModule,
+    ...TuiTextfield
   ],
   exports: [
     LoginComponent

@@ -1,9 +1,23 @@
+html, body, app-root, tui-root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
     --main-bg-color: #f8f3ea;
     --primary-color: #335383;
     --background-color: #25375e;
     --text-color: #1e2636;
     --special-color: #f9fbfc;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 40rem;
 }
 
 .page-title {

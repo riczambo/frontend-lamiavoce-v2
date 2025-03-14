@@ -8,10 +8,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   providedIn: 'root',
 })
 export class AuthApiService {
-  private apiUrl = 'http://localhost:8080/api/auth';
-
   constructor(
-    private http: HttpClient,
     private auth: AngularFireAuth
   ) {}
 

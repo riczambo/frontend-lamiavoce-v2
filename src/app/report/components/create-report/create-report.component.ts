@@ -22,8 +22,7 @@ export class CreateReportComponent {
 
   constructor(
     private fb: FormBuilder,
-    public reportService: ReportService,
-    private router: Router
+    public reportService: ReportService
   ) {
     this.creationReportForm = this.fb.group({
       title: ['', Validators.required],
@@ -50,9 +49,5 @@ export class CreateReportComponent {
     } finally {
       this.isLoading = false;
     }
-  }
-
-  navigateToReports(): void {
-    this.router.navigate(['/reports']);
   }
 }

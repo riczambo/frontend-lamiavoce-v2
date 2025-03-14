@@ -21,6 +21,10 @@ export class ReportService {
     return this.reportsCollection.add(report);
   }
 
+  deleteReport(reportId: string): Promise<void> {
+    return this.reportsCollection.doc(reportId).delete();
+  }  
+
   getReports(filter?: ReportFilterDTO): Observable<any[]> {
     return this.firestore.collection('reports', ref => {
       let query: firebase.firestore.Query<firebase.firestore.DocumentData> = ref;
@@ -36,5 +40,5 @@ export class ReportService {
       
       return query;
     }).valueChanges({ idField: 'id' });
-  }  
+  }
 }

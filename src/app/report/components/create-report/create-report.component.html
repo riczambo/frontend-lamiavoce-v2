@@ -1,4 +1,4 @@
-<div class="create-report-form">
+<div class="content-container">
   <p class="page-title">Crea nuova segnalazione</p>
   <form
       tuiAppearance="floating"
@@ -48,7 +48,7 @@
       </tui-select>
 
       <footer>
-          <button appearance="secondary" tuiButton type="button" (click)="navigateToReports()">Annulla</button>
+          <button appearance="secondary" tuiButton type="button" [routerLink]="'/reports'">Annulla</button>
           <button [disabled]="!creationReportForm.valid" tuiButton type="submit" (click)="open = true">Conferma</button>
       </footer>
   </form>
@@ -71,7 +71,8 @@
             tuiButton
             appearance="primary"
             type="button"
-            (click)="observer.complete(); navigateToReports()"
+            (click)="observer.complete()"
+            [routerLink]="'/reports'"
         >
             Torna alla homepage
         </button>

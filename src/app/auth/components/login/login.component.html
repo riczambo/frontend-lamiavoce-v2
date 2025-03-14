@@ -1,24 +1,25 @@
-<div class="login-container">
-  <h2>Login</h2>
-  <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="login()">
-    <nz-form-item>
-      <nz-form-control nzErrorTip="Inserisci un'email valida">
-        <nz-input-group nzPrefixIcon="mail">
-          <input type="email" nz-input formControlName="email" placeholder="Email" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
+<div class="content-container" [@tuiFadeIn] [@tuiFadeOut]>
+  <p class="page-title">Login</p>
+  <form
+      tuiAppearance="floating"
+      tuiCardLarge
+      tuiForm="m"
+      [formGroup]="loginForm"
+      (ngSubmit)="login()"
+  >
+    <tui-textfield>
+      <label tuiLabel>Email</label>
+      <input formControlName="email" tuiTextfield />
+    </tui-textfield>
 
-    <nz-form-item>
-      <nz-form-control nzErrorTip="La password deve avere almeno 6 caratteri">
-        <nz-input-group nzPrefixIcon="lock">
-          <input type="password" nz-input formControlName="password" placeholder="Password" />
-        </nz-input-group>
-      </nz-form-control>
-    </nz-form-item>
+    <tui-textfield>
+      <label tuiLabel>Password</label>
+      <input formControlName="password" tuiTextfield />
+    </tui-textfield>
 
-    <button nz-button class="login-form-button" [nzType]="'primary'" [disabled]="loginForm.invalid">
-      Login
-    </button>
+    <footer>
+      <button appearance="secondary" tuiButton type="button" [routerLink]="'/reports'">Annulla</button>
+      <button [disabled]="!loginForm.valid" tuiButton type="submit">Accedi</button>
+    </footer>
   </form>
 </div>

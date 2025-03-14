@@ -1,4 +1,4 @@
-<div class="report-list" [@tuiFadeIn]>
+<div class="content-container" [@tuiFadeIn] [@tuiFadeOut]>
   <p class="page-title">Lista segnalazioni</p>
   <form
   [formGroup]="filterForm"
@@ -8,7 +8,6 @@
         <div>
           <tui-multi-select
             formControlName="selectCategorie"
-            tuiHintContent="Seleziona categorie da filtrare"
             [editable]="false"
             [rows]="1"
             [style.border-radius]="'inherit'"
@@ -22,7 +21,6 @@
         <div>
           <tui-multi-select
             formControlName="selectZone"
-            tuiHintContent="Seleziona zone da filtrare"
             [editable]="false"
             [rows]="1"
             [style.border-radius]="'inherit'"
@@ -37,9 +35,29 @@
   </form>
 
   <div *ngFor="let report of reports" tuiCardLarge tuiAppearance="floating" class="report-card" [@tuiDropdownAnimation]>
-    <button class="flag-button" (click)="flagContent(report)">
-      <tui-icon icon="@tui.flag" size="s"></tui-icon>
-    </button>
+    <div class="manage-buttons">
+      <button
+        class="manage-icon"
+        appearance="secondary"
+        iconStart="@tui.flag"
+        size="s"
+        tuiButton
+        type="button"
+        [style.border-radius.%]="90"
+        (click)="flagContent(report)"
+      ></button>
+      <button
+        *ngIf="isAuthenticated"
+        class="manage-icon"
+        appearance="secondary"
+        iconStart="@tui.trash"
+        size="s"
+        tuiButton
+        type="button"
+        [style.border-radius.%]="90"
+        (click)="deleteReport(report)"
+      ></button>
+    </div>
     <span tuiTitle class="fade report-title">
       {{report.title}}
     </span>
@@ -65,7 +83,7 @@
 >
     <button
     type="button"
-    (click)="navigateToCreateReport()">
+    [routerLink]="'/create-report'">
         <tui-icon icon="@tui.circle-plus"></tui-icon>
         Crea segnalazione
     </button>

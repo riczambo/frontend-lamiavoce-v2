@@ -22,7 +22,8 @@ import {
   TuiLoader,
   TuiDialogOptions,
   TuiDialogComponent,  
-  TuiLink
+  TuiLink,
+  TuiIconPipe
 } from '@taiga-ui/core';
 import { 
   TuiInputModule,
@@ -51,7 +52,6 @@ import {
   TuiTooltip
 } from '@taiga-ui/kit';
 import {TuiResponsiveDialog} from '@taiga-ui/addon-mobile';
-import type {TuiResponsiveDialogOptions} from '@taiga-ui/addon-mobile';
 import { RouterLink } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -72,6 +72,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TuiButton,
     TuiResponsiveDialog,
     TuiIcon,
+    TuiIconPipe,
     TuiInputModule,
     TuiSelectModule,
     TuiSelect,
@@ -105,7 +106,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ...TuiTextfield,
     ...TuiHint,
     ...TuiBlockStatus,
-    
   ],
   exports: [
     CreateReportComponent,

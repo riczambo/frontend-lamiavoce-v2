@@ -4,6 +4,7 @@ import { ReportFilterDTO, ReportDTO, AttachmentDTO } from '../../../commons/mode
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { tuiDropdownAnimation, tuiFadeIn } from '@taiga-ui/core';
+import { AuthStateService } from '../../../commons/services/auth-state.service';
 
 @Component({
   selector: 'app-report',
@@ -12,12 +13,14 @@ import { tuiDropdownAnimation, tuiFadeIn } from '@taiga-ui/core';
   animations: [tuiFadeIn, tuiDropdownAnimation]
 })
 export class ReportsComponent implements OnInit {
+  isAuthenticated = false;
   filterForm!: FormGroup;
   reports: ReportDTO[] = [];
 
   constructor(
     public reportService: ReportService,
     private router: Router,
+    private authState: AuthStateService,
     private fb: FormBuilder
   ) {}
 
@@ -29,6 +32,10 @@ export class ReportsComponent implements OnInit {
 
     this.filterForm.valueChanges.subscribe(values => {
       this.onFilterChange();
+    });
+
+    this.authState.isAuthenticated().subscribe((isLoggedIn) => {
+      this.isAuthenticated = isLoggedIn;
     });
 
     this.getReports();
@@ -55,6 +62,12 @@ export class ReportsComponent implements OnInit {
     );
   }
 
+  deleteReport(report: any): void {
+    this.reportService.deleteReport(report.id).then(() => {
+      this.getReports();
+    });
+  }
+
   onFilterChange(): void {
     this.getReports();
   }
@@ -63,10 +76,6 @@ export class ReportsComponent implements OnInit {
     console.log('Segnalazione per il report:', report);
   }
 
-  navigateToCreateReport(): void {
-    this.router.navigateByUrl('/create-report');
-  }
-  
   isImage(attachment: AttachmentDTO): boolean {
     return attachment.contentType.startsWith('image/');
   }
