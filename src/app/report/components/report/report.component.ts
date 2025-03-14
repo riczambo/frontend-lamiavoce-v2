@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../services/report.service';
 import { ReportFilterDTO, ReportDTO, AttachmentDTO } from '../../../commons/model/entity.model';
-import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { tuiDropdownAnimation, tuiFadeIn } from '@taiga-ui/core';
-import { AuthStateService } from '../../../commons/services/auth-state.service';
+import { AuthStateService } from '../../../auth/services/auth-state.service';
 
 @Component({
   selector: 'app-report',
@@ -13,13 +12,13 @@ import { AuthStateService } from '../../../commons/services/auth-state.service';
   animations: [tuiFadeIn, tuiDropdownAnimation]
 })
 export class ReportsComponent implements OnInit {
-  isAuthenticated = false;
+  isAuthenticated$ = this.authState.isLoggedIn;
+  openDropdownId: string | null = null;
   filterForm!: FormGroup;
   reports: ReportDTO[] = [];
 
   constructor(
     public reportService: ReportService,
-    private router: Router,
     private authState: AuthStateService,
     private fb: FormBuilder
   ) {}
@@ -34,11 +33,11 @@ export class ReportsComponent implements OnInit {
       this.onFilterChange();
     });
 
-    this.authState.isAuthenticated().subscribe((isLoggedIn) => {
-      this.isAuthenticated = isLoggedIn;
-    });
-
     this.getReports();
+  }
+
+  toggleDropdown(reportId: string, isOpen: boolean): void {
+    this.openDropdownId = isOpen ? reportId : null;
   }
 
   getReports(): void {

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { delay, from, Observable, of } from 'rxjs';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { from, Observable } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({

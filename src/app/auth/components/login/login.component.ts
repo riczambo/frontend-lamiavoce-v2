@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthApiService } from '../../services/auth-api.service';
 import { Router } from '@angular/router';
+import { tuiFadeIn, tuiHeightCollapseList } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less'],
+  animations: [tuiFadeIn, tuiHeightCollapseList]
 })
 export class LoginComponent {
   
@@ -30,7 +32,8 @@ export class LoginComponent {
       this.authService.signIn({
         email: this.loginForm.value.email,
         password: this.loginForm.value.password
-      }).subscribe(() => {
+      }).subscribe((data) => {
+        console.log('Logged in', data);
         this.router.navigate(['/reports']);
       })
     }

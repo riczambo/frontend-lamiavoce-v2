@@ -20,10 +20,11 @@ import {
   TuiDataList,
   TuiDialog,
   TuiLoader,
-  TuiDialogOptions,
   TuiDialogComponent,  
   TuiLink,
-  TuiIconPipe
+  TuiIconPipe,
+  TuiDropdown,
+  TuiOption
 } from '@taiga-ui/core';
 import { 
   TuiInputModule,
@@ -48,10 +49,11 @@ import {
   TuiFieldErrorPipe,
   TuiIconBadge,
   TuiSegmented,
+  TuiStep,
   TuiSwitch,
   TuiTooltip
 } from '@taiga-ui/kit';
-import {TuiResponsiveDialog} from '@taiga-ui/addon-mobile';
+import {TuiDropdownMobile, TuiResponsiveDialog} from '@taiga-ui/addon-mobile';
 import { RouterLink } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -101,7 +103,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     TuiInputModule,
     TuiButtonGroup,
     TuiIconBadge,
+    TuiDropdownMobile,
+    TuiOption,
+    TuiStep,
     ...TuiDataList,
+    ...TuiDropdown,
     ...TuiDataListWrapper,
     ...TuiTextfield,
     ...TuiHint,

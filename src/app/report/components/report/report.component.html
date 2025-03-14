@@ -1,4 +1,4 @@
-<div class="content-container" [@tuiFadeIn] [@tuiFadeOut]>
+<div class="content-container" [@tuiFadeIn]>
   <p class="page-title">Lista segnalazioni</p>
   <form
   [formGroup]="filterForm"
@@ -34,29 +34,45 @@
     </div>
   </form>
 
-  <div *ngFor="let report of reports" tuiCardLarge tuiAppearance="floating" class="report-card" [@tuiDropdownAnimation]>
-    <div class="manage-buttons">
+  <div *ngFor="let report of reports" 
+     tuiCardLarge 
+     tuiAppearance="floating" 
+     class="report-card"
+     [class.hover-active]="openDropdownId === report.id.toString()"
+     [@tuiDropdownAnimation]>
+    <div class="menu-container">
       <button
-        class="manage-icon"
-        appearance="secondary"
-        iconStart="@tui.flag"
-        size="s"
-        tuiButton
+        tuiIconButton
+        tuiDropdownHover
+        appearance="flat"
+        iconStart="@tui.ellipsis"
         type="button"
-        [style.border-radius.%]="90"
-        (click)="flagContent(report)"
-      ></button>
-      <button
-        *ngIf="isAuthenticated"
-        class="manage-icon"
-        appearance="secondary"
-        iconStart="@tui.trash"
         size="s"
-        tuiButton
-        type="button"
-        [style.border-radius.%]="90"
-        (click)="deleteReport(report)"
-      ></button>
+        tuiDropdownAlign="right"
+        [tuiDropdown]="dropdown"
+        class="menu-button"
+        (tuiDropdownOpenChange)="toggleDropdown(report.id.toString(), $event)"
+      >
+      </button>
+      <ng-template #dropdown let-close>
+        <tui-data-list class="report-dropdown">
+          <button
+            tuiOption
+            type="button"
+            iconStart="@tui.flag"
+            (click)="flagContent(report)">
+            Segnala
+          </button>
+          <button
+            *ngIf="isAuthenticated$ | async"
+            tuiOption
+            type="button"
+            iconStart="@tui.trash"
+            (click)="deleteReport(report)">
+            Cancella
+          </button>
+        </tui-data-list>
+      </ng-template>
     </div>
     <span tuiTitle class="fade report-title">
       {{report.title}}
