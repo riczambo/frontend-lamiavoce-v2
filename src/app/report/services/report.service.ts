@@ -17,7 +17,7 @@ export class ReportService {
     private firestore: AngularFirestore
   ) {}
 
-  addReport(report: any): Promise<any> {
+  addReport(report: Report): Promise<any> {
     return this.reportsCollection.add(report);
   }
 
@@ -38,7 +38,16 @@ export class ReportService {
         }
       }
       
-      return query;
+      return query.orderBy('upvotes', 'desc');;
     }).valueChanges({ idField: 'id' });
   }
+
+  incrementUpvote(reportId: string): Promise<void> {
+    return this.firestore
+      .collection('reports')
+      .doc(reportId)
+      .update({
+        upvotes: firebase.firestore.FieldValue.increment(1)
+      });
+  }  
 }

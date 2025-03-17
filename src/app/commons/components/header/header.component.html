@@ -2,13 +2,13 @@
   <h1 class="app-title" routerLink="/reports">RovigoSegnala</h1>
   <div class="header-right">
     <ng-container *ngIf="(isAuthenticated$ | async) as user; else login">
-      <button tuiButton appearance="icon" size="s">{{ user.email?.charAt(0) | uppercase }}
+      <button tuiButton>{{ user.email?.charAt(0) | uppercase }}
       </button>
-      <button tuiButton iconStart="@tui.log-out" appearance="icon" (click)="logout()" routerLink="/reports">
+      <button tuiIconButton iconStart="@tui.log-out" (click)="logout()" routerLink="/reports">
       </button>
     </ng-container>
     <ng-template #login>
-      <button tuiIconButton iconStart="@tui.user" appearance="icon" routerLink="/login">
+      <button tuiIconButton iconStart="@tui.user" routerLink="/login">
       </button>
     </ng-template>
   </div>

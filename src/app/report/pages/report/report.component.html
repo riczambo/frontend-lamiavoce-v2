@@ -1,0 +1,66 @@
+<div class="content-container" [@tuiFadeIn]>
+  <p class="page-title">Lista segnalazioni</p>
+  <form
+  [formGroup]="filterForm"
+  (ngSubmit)="onFilterChange()"
+  >
+    <div tuiGroup class="group">
+        <div>
+          <tui-multi-select
+            formControlName="selectCategorie"
+            [editable]="false"
+            [rows]="1"
+            [style.border-radius]="'inherit'"
+            [tuiTextfieldLabelOutside]="true"
+            >Categorie<tui-data-list-wrapper
+                        *tuiDataList
+                        tuiMultiSelectGroup
+                        [items]="reportService.categories"/>
+          </tui-multi-select>
+        </div>
+        <div>
+          <tui-multi-select
+            formControlName="selectZone"
+            [editable]="false"
+            [rows]="1"
+            [style.border-radius]="'inherit'"
+            [tuiTextfieldLabelOutside]="true"
+            >Zone<tui-data-list-wrapper
+                    *tuiDataList
+                    tuiMultiSelectGroup
+                    [items]="reportService.zones"/>
+            </tui-multi-select>
+        </div>
+    </div>
+  </form>
+  
+  <report-card
+    *ngFor="let report of reports"
+    class="report-card"
+    [class.hover-active]="openDropdownId === report.id.toString()"
+    [@tuiDropdownAnimation]
+    [report]="report"
+    [isAuthenticated]="isAuthenticated$ | async"
+    (deleteRequested)="handleDeleteReport($event)"
+    (dropdownToggled)="handleDropdownToggled($event)"
+    (upvoteRequested)="handleUpvote($event)"
+    >
+  </report-card>
+  
+  <div *ngIf="reports.length === 0">
+    <tui-block-status>
+      <tui-icon icon="@tui.square-x" size="l"></tui-icon>
+      <h4>Nessuna segnalazione trovata</h4>
+    </tui-block-status>
+  </div>
+  
+</div>
+
+<tui-data-list class="floating-button" [@tuiFadeIn]>
+  <button
+    tuiOption
+    iconStart="@tui.circle-plus"
+    [routerLink]="'/create-report'">
+    Crea segnalazione
+  </button>
+</tui-data-list>

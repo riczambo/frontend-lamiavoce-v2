@@ -33,7 +33,6 @@ export class LoginComponent {
         email: this.loginForm.value.email,
         password: this.loginForm.value.password
       }).subscribe((data) => {
-        console.log('Logged in', data);
         this.router.navigate(['/reports']);
       })
     }

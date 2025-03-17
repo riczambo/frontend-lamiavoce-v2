@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreateReportComponent } from './components/create-report/create-report.component';
-import { ReportsComponent } from './components/report/report.component';
+import { CreateReportComponent } from './pages/create-report/create-report.component';
+import { ReportsComponent } from './pages/report/report.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthModule } from '../auth/auth.module';
 
@@ -56,11 +56,13 @@ import {
 import {TuiDropdownMobile, TuiResponsiveDialog} from '@taiga-ui/addon-mobile';
 import { RouterLink } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReportCardComponent } from './components/report-card/report-card.component';
 
 @NgModule({
   declarations: [
     CreateReportComponent,
-    ReportsComponent
+    ReportsComponent,
+    ReportCardComponent
   ],
   imports: [
     CommonModule,

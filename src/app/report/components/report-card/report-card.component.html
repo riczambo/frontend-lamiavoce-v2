@@ -1,0 +1,37 @@
+<div class="report-single-card">
+    <div class="menu-container">
+    <button
+        tuiIconButton
+        tuiDropdownHover
+        appearance="flat"
+        iconStart="@tui.ellipsis"
+        type="button"
+        size="s"
+        tuiDropdownAlign="right"
+        [tuiDropdown]="dropdown"
+        class="menu-button"
+        (tuiDropdownOpenChange)="toggleDropdown($event)">
+    </button>
+    <ng-template #dropdown let-close>
+        <tui-data-list class="report-dropdown">
+        <button tuiOption type="button" iconStart="@tui.flag" (click)="flagContent(report)">
+            Segnala
+        </button>
+        <button *ngIf="isAuthenticated" tuiOption type="button" iconStart="@tui.trash" (click)="onDelete()">
+            Cancella
+        </button>
+        </tui-data-list>
+    </ng-template>
+    </div>  
+
+    <span tuiTitle class="fade report-title">{{ report.title }}</span>
+    <section class="report-description">{{ report.description }}</section>
+    <p><strong>Categoria:</strong> {{ report.category }}</p>
+    <p><strong>Zona:</strong> {{ report.zone }}</p>
+</div>
+
+<div class="card-extension">
+    <button tuiButton iconStart="@tui.arrow-big-up" size="m" class="arrow-up-button" (click)="onUpvote()">
+        {{ report.upvotes || '0'}}
+    </button>
+</div>  

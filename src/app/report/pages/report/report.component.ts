@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportService } from '../../services/report.service';
-import { ReportFilterDTO, ReportDTO, AttachmentDTO } from '../../../commons/model/entity.model';
+import { ReportFilterDTO, Report } from '../../../commons/model/entity.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { tuiDropdownAnimation, tuiFadeIn } from '@taiga-ui/core';
 import { AuthStateService } from '../../../auth/services/auth-state.service';
@@ -13,9 +13,9 @@ import { AuthStateService } from '../../../auth/services/auth-state.service';
 })
 export class ReportsComponent implements OnInit {
   isAuthenticated$ = this.authState.isLoggedIn;
-  openDropdownId: string | null = null;
   filterForm!: FormGroup;
-  reports: ReportDTO[] = [];
+  reports: Report[] = [];
+  openDropdownId: string | null = null;
 
   constructor(
     public reportService: ReportService,
@@ -34,10 +34,6 @@ export class ReportsComponent implements OnInit {
     });
 
     this.getReports();
-  }
-
-  toggleDropdown(reportId: string, isOpen: boolean): void {
-    this.openDropdownId = isOpen ? reportId : null;
   }
 
   getReports(): void {
@@ -61,22 +57,26 @@ export class ReportsComponent implements OnInit {
     );
   }
 
-  deleteReport(report: any): void {
-    this.reportService.deleteReport(report.id).then(() => {
-      this.getReports();
-    });
-  }
-
   onFilterChange(): void {
     this.getReports();
   }
 
-  flagContent(report: any): void {
-    console.log('Segnalazione per il report:', report);
+  handleDeleteReport(report: Report): void {
+    this.reportService.deleteReport(report.id.toString()).then(() => {
+      this.getReports();
+    }).catch(error => {
+      console.error('Errore durante l\'eliminazione del report:', error);
+    });
   }
 
-  isImage(attachment: AttachmentDTO): boolean {
-    return attachment.contentType.startsWith('image/');
+  handleUpvote(report: Report): void {
+    this.reportService.incrementUpvote(report.id.toString())
+      .catch(error => {
+        console.error("Errore durante l'incremento degli upvote:", error);
+      });
+  }  
+
+  handleDropdownToggled({ reportId, isOpen }: { reportId: string, isOpen: boolean }): void {
+    this.openDropdownId = isOpen ? reportId : null;
   }
-  
 }
