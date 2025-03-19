@@ -7,7 +7,8 @@ export class Report {
   category: string;
   creationDate: string;
   zone: string;
-  upvotes: number;
+  upvotes: string[];
+  upvotesCount: number;
 
   constructor(
     id: number,
@@ -18,7 +19,8 @@ export class Report {
     category: string,
     creationDate: string,
     zone: string,
-    upvotes: number
+    upvotes: string[],
+    upvotesCount: number
   ) {
     this.id = id;
     this.title = title;
@@ -29,6 +31,7 @@ export class Report {
     this.creationDate = creationDate;
     this.zone = zone;
     this.upvotes = upvotes;
+    this.upvotesCount = upvotesCount;
   }
 }
 

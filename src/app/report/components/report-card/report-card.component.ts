@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReportService } from '../../services/report.service';
 import { Report } from '../../../commons/model/entity.model';
+import { UserInfo } from 'firebase/auth';
 
 @Component({
   selector: 'report-card',
@@ -9,7 +10,7 @@ import { Report } from '../../../commons/model/entity.model';
 })
 export class ReportCardComponent {
   @Input() report!: Report;
-  @Input() isAuthenticated: any;
+  @Input() user!: UserInfo | null;
   @Output() deleteRequested = new EventEmitter<Report>();
   @Output() upvoteRequested = new EventEmitter<Report>();
   @Output() dropdownToggled = new EventEmitter<{ reportId: string, isOpen: boolean }>();

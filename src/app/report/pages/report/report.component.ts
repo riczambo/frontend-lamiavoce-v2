@@ -12,7 +12,7 @@ import { AuthStateService } from '../../../auth/services/auth-state.service';
   animations: [tuiFadeIn, tuiDropdownAnimation]
 })
 export class ReportsComponent implements OnInit {
-  isAuthenticated$ = this.authState.isLoggedIn;
+  user$ = this.authState.user$;
   filterForm!: FormGroup;
   reports: Report[] = [];
   openDropdownId: string | null = null;
@@ -70,10 +70,18 @@ export class ReportsComponent implements OnInit {
   }
 
   handleUpvote(report: Report): void {
-    this.reportService.incrementUpvote(report.id.toString())
-      .catch(error => {
-        console.error("Errore durante l'incremento degli upvote:", error);
-      });
+    if (this.authState.currentUser) {
+      const uid = this.authState.currentUser.uid;
+      const updatedUpvotes = report.upvotes ? [...report.upvotes] : [];
+      
+      if (updatedUpvotes.includes(uid)) {
+        const index = updatedUpvotes.indexOf(uid);
+        updatedUpvotes.splice(index, 1);
+      } else {
+        updatedUpvotes.push(uid);
+      }
+      this.reportService.updateUpvotes(report.id.toString(), updatedUpvotes, updatedUpvotes.length);
+    }
   }  
 
   handleDropdownToggled({ reportId, isOpen }: { reportId: string, isOpen: boolean }): void {

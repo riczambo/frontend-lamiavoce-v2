@@ -38,16 +38,14 @@ export class ReportService {
         }
       }
       
-      return query.orderBy('upvotes', 'desc');;
+      return query.orderBy('upvotesCount', 'desc');;
     }).valueChanges({ idField: 'id' });
   }
 
-  incrementUpvote(reportId: string): Promise<void> {
-    return this.firestore
-      .collection('reports')
-      .doc(reportId)
-      .update({
-        upvotes: firebase.firestore.FieldValue.increment(1)
-      });
+  updateUpvotes(reportId: string, upvotes: string[], upvotesCount: number): Promise<void> {
+    return this.firestore.collection('reports').doc(reportId).update({ 
+      upvotes,
+      upvotesCount
+    });
   }  
 }

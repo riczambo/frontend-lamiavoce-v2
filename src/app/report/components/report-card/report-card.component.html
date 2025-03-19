@@ -17,7 +17,7 @@
         <button tuiOption type="button" iconStart="@tui.flag" (click)="flagContent(report)">
             Segnala
         </button>
-        <button *ngIf="isAuthenticated" tuiOption type="button" iconStart="@tui.trash" (click)="onDelete()">
+        <button *ngIf="user?.email === 'rovigosegnala@gmail.com'" tuiOption type="button" iconStart="@tui.trash" (click)="onDelete()">
             Cancella
         </button>
         </tui-data-list>
@@ -31,7 +31,12 @@
 </div>
 
 <div class="card-extension">
-    <button tuiButton iconStart="@tui.arrow-big-up" size="m" class="arrow-up-button" (click)="onUpvote()">
-        {{ report.upvotes || '0'}}
+    <button
+        tuiButton
+        [iconStart]="report.upvotes.includes(user?.uid ?? '') ? '@tui.arrow-big-up-filled' : '@tui.arrow-big-up'"
+        size="m"
+        class="arrow-up-button"
+        (click)="onUpvote()">
+        {{ report.upvotes.length || 0}}
     </button>
 </div>  

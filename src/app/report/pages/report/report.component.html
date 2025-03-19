@@ -40,7 +40,7 @@
     [class.hover-active]="openDropdownId === report.id.toString()"
     [@tuiDropdownAnimation]
     [report]="report"
-    [isAuthenticated]="isAuthenticated$ | async"
+    [user]="user$ | async"
     (deleteRequested)="handleDeleteReport($event)"
     (dropdownToggled)="handleDropdownToggled($event)"
     (upvoteRequested)="handleUpvote($event)"
