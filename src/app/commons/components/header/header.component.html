@@ -1,8 +1,8 @@
 <div class="header">
   <h1 class="app-title" routerLink="/reports">RovigoSegnala</h1>
   <div class="header-right">
-    <ng-container *ngIf="(isAuthenticated$ | async) as user; else login">
-      <button tuiButton>{{ user.email?.charAt(0) | uppercase }}
+    <ng-container *ngIf="(user$ | async) as user; else login">
+      <button tuiButton>{{ user.displayName?.charAt(0) | uppercase }}
       </button>
       <button tuiIconButton iconStart="@tui.log-out" (click)="logout()" routerLink="/reports">
       </button>
@@ -13,3 +13,12 @@
     </ng-template>
   </div>
 </div>
+<!-- TEMPORANEO -->
+<div style="justify-items: center; background-color: #FFC7001F;">
+  <tui-notification size="s" appearance="warning">
+    <p tuiSubtitle>
+      L'app è in versione beta
+    </p>
+  </tui-notification>
+</div>
+<!--  -->

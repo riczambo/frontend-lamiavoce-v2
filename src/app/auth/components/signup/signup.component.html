@@ -1,42 +1,71 @@
-<p class="page-title">Registrazione</p>
+<div class="content-container" [@tuiFadeIn]>
+  <p class="page-title">Registrazione</p>
+  <form
+      tuiAppearance="floating"
+      tuiCardLarge
+      tuiForm="m"
+      [formGroup]="signupForm"
+      (ngSubmit)="onSubmit()"
+  >
 
-<!-- <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)" nz-form [nzLayout]="'vertical'">
-  <nz-form-item>
-    <nz-form-label [nzFor]="'firstName'">Nome</nz-form-label>
-    <nz-form-control>
-      <input nz-input type="text" id="firstName" name="firstName" ngModel required />
-    </nz-form-control>
-  </nz-form-item>
+    <tui-textfield>
+      <label tuiLabel>Nome</label>
+      <input formControlName="firstName" tuiTextfield />
+      <tui-error
+        [error]="signupForm.get('firstName')?.errors?.['required'] && signupForm.get('firstName')?.touched">
+        Il nome è obbligatorio
+      </tui-error>
+    </tui-textfield>
 
-  <nz-form-item>
-    <nz-form-label [nzFor]="'lastName'">Cognome</nz-form-label>
-    <nz-form-control>
-      <input nz-input type="text" id="lastName" name="lastName" ngModel required />
-    </nz-form-control>
-  </nz-form-item>
+    <tui-textfield>
+      <label tuiLabel>Cognome</label>
+      <input formControlName="lastName" tuiTextfield />
+      <tui-error
+        [error]="signupForm.get('lastName')?.errors?.['required'] && signupForm.get('lastName')?.touched">
+        Il cognome è obbligatorio
+      </tui-error>
+    </tui-textfield>
 
-  <nz-form-item>
-    <nz-form-label [nzFor]="'email'">Email</nz-form-label>
-    <nz-form-control>
-      <input nz-input type="email" id="email" name="email" ngModel required />
-    </nz-form-control>
-  </nz-form-item>
+    <tui-textfield>
+      <label tuiLabel>Email</label>
+      <input formControlName="email" tuiTextfield />
+      <tui-error
+        [error]="signupForm.get('email')?.errors?.['required'] && signupForm.get('email')?.touched">
+        L'email è obbligatoria
+      </tui-error>
+      <tui-error
+        [error]="signupForm.get('email')?.errors?.['email'] && signupForm.get('email')?.touched">
+        Inserisci un'email valida
+      </tui-error>
+    </tui-textfield>
 
-  <nz-form-item>
-    <nz-form-label [nzFor]="'password'">Password</nz-form-label>
-    <nz-form-control>
-      <input nz-input type="password" id="password" name="password" ngModel required />
-    </nz-form-control>
-  </nz-form-item>
+    <tui-textfield>
+      <label tuiLabel>Password</label>
+      <input formControlName="password" type="password" tuiTextfield />
+      <tui-error
+        [error]="signupForm.get('password')?.errors?.['required'] && signupForm.get('password')?.touched">
+        La password è obbligatoria
+      </tui-error>
+      <tui-error
+        [error]="signupForm.get('password')?.errors?.['minlength'] && signupForm.get('password')?.touched">
+        La password deve contenere almeno 6 caratteri
+      </tui-error>
+    </tui-textfield>
 
-  <nz-form-item>
-    <nz-form-label [nzFor]="'confirmPassword'">Conferma Password</nz-form-label>
-    <nz-form-control>
-      <input nz-input type="password" id="confirmPassword" name="confirmPassword" ngModel required />
-    </nz-form-control>
-  </nz-form-item>
+    <tui-textfield>
+      <label tuiLabel>Conferma password</label>
+      <input formControlName="confirmPassword" type="password" tuiTextfield />
+      <tui-error
+        [error]="signupForm.errors?.['passwordMismatch'] && signupForm.get('confirmPassword')?.touched">
+        Le password non corrispondono
+      </tui-error>
+    </tui-textfield>
 
-  <button nz-button nzType="primary" type="submit" [disabled]="!signupForm.form.valid || !passwordsMatch(signupForm)">
-    Invia
-  </button>
-</form> -->
+    <footer>
+      <button appearance="secondary" tuiButton type="button" [routerLink]="'/reports'">Annulla</button>
+      <button [disabled]="!signupForm.valid || isLoggingIn" tuiButton type="submit">
+        {{ isLoggingIn ? 'Registrazione in corso...' : 'Registrati' }}
+      </button>
+    </footer>
+  </form>
+</div>

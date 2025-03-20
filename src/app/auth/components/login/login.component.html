@@ -1,4 +1,4 @@
-<div class="content-container" [@tuiFadeIn] [@tuiHeightCollapseList]>
+<div class="content-container" [@tuiFadeIn]>
   <p class="page-title">Login</p>
   <form
       tuiAppearance="floating"
@@ -22,4 +22,15 @@
       <button [disabled]="!loginForm.valid" tuiButton type="submit">Accedi</button>
     </footer>
   </form>
+
+  <div
+    tuiAppearance="floating"
+    tuiCardMedium
+    class="new-subscriber"
+  >
+  <h2 tuiTitle="m">
+    Non fai ancora parte della community di RovigoSegnala?
+  </h2>
+  <button tuiButton size="m" type="submit" [routerLink]="'/signup'">Registrati!</button>
+  </div>
 </div>

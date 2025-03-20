@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthApiService } from '../../services/auth-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -7,31 +9,58 @@ import { NgForm } from '@angular/forms';
   styleUrl: './signup.component.less'
 })
 export class SignupComponent {
+  signupForm: FormGroup;
+  isLoggingIn = false;
 
-  constructor() {}
-
-  onSubmit(signupForm: NgForm) {
-    if (signupForm.valid && this.passwordsMatch(signupForm)) {
-      const { firstName, lastName, email, password } = signupForm.value;
-      console.log('Nome:', firstName);
-      console.log('Cognome:', lastName);
-      console.log('Email:', email);
-      console.log('Password:', password);
-      
-      signupForm.reset();
-    }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthApiService,
+    private router: Router
+  ) {
+    this.signupForm = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6)
+      ]],
+      confirmPassword: ['', [Validators.required]]
+    }, { validators: this.passwordMatchValidator });
   }
 
-  passwordsMatch(signupForm: NgForm): boolean {
-    const passwordControl = signupForm.controls['password'];
-    const confirmPasswordControl = signupForm.controls['confirmPassword'];
+  private passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password');
+    const confirmPassword = form.get('confirmPassword');
 
-    if (!passwordControl || !confirmPasswordControl) {
-      return false;
+    if (password?.value === confirmPassword?.value) {
+      return null;
     }
+    return { passwordMismatch: true };
+  }
 
-    const password = passwordControl.value;
-    const confirmPassword = confirmPasswordControl.value;
-    return password === confirmPassword;
+  onSubmit() {
+    if (this.signupForm.valid) {
+      this.isLoggingIn = true;
+      const { firstName, lastName, email, password } = this.signupForm.value;
+
+      this.authService.signup(email, password).subscribe({
+        next: (response) => {
+          this.authService.updateProfile(firstName, lastName).subscribe({
+            next: () => {
+              this.router.navigate(['/reports']);
+            },
+            error: (error) => {
+              console.error('Error updating profile:', error);
+              this.isLoggingIn = false;
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Signup error:', error);
+          this.isLoggingIn = false;
+        }
+      });
+    }
   }
 }

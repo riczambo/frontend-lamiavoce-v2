@@ -7,7 +7,7 @@ import { AuthStateService } from '../../../auth/services/auth-state.service';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent {
-  isAuthenticated$ = this.authState.isLoggedIn;
+  user$ = this.authState.user$;
 
   constructor(
     private authState: AuthStateService

@@ -12,7 +12,8 @@ import {
 } from '@taiga-ui/legacy';
 import { TuiAppearance, TuiButton, TuiError, TuiTextfield } from '@taiga-ui/core';
 import { TuiFieldErrorPipe } from '@taiga-ui/kit';
-import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
+import { TuiCardLarge, TuiCardMedium, TuiForm } from '@taiga-ui/layout';
+import { TuiValidationError } from '@taiga-ui/cdk/classes';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { TuiCardLarge, TuiForm } from '@taiga-ui/layout';
     TuiError,
     TuiAppearance,
     TuiCardLarge,
+    TuiCardMedium,
     TuiForm,
     TuiFieldErrorPipe,
     TuiTextfieldControllerModule,
