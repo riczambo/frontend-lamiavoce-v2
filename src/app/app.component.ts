@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'frontend-lamiavoce-v2';
+  title = 'frontend-rovigosegnala-v2';
 }

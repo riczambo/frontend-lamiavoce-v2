@@ -1,5 +1,5 @@
 {
-  "name": "frontend-lamiavoce-v2",
+  "name": "frontend-rovigosegnala-v2",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:frontend-lamiavoce-v2": "node dist/frontend-lamiavoce-v2/server/server.mjs"
+    "serve:ssr:frontend-rovigosegnala-v2": "node dist/frontend-rovigosegnala-v2/server/server.mjs"
   },
   "private": true,
   "dependencies": {
