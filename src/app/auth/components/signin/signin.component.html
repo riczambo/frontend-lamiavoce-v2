@@ -1,11 +1,11 @@
 <div class="content-container" [@tuiFadeIn]>
-  <p class="page-title">Login</p>
+  <p class="page-title">Accedi</p>
   <form
       tuiAppearance="floating"
       tuiCardLarge
       tuiForm="m"
-      [formGroup]="loginForm"
-      (ngSubmit)="login()"
+      [formGroup]="signInForm"
+      (ngSubmit)="signIn()"
   >
     <tui-textfield>
       <label tuiLabel>Email</label>
@@ -19,8 +19,15 @@
 
     <footer>
       <button appearance="secondary" tuiButton type="button" [routerLink]="'/reports'">Annulla</button>
-      <button [disabled]="!loginForm.valid" tuiButton type="submit">Accedi</button>
+      <button [disabled]="!signInForm.valid" tuiButton type="submit">Accedi</button>
     </footer>
+
+    <div style="justify-items: center;">
+      <h3 tuiTitle="m">
+        oppure
+      </h3>
+      <button appearance="secondary" tuiButton type="button" (click)="signInWithGoogle()">Accedi con <img src="assets/images/google.png" alt="Google logo"  style="height: 4rem;"></button>
+    </div>
   </form>
 
   <div

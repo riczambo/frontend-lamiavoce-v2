@@ -3,8 +3,9 @@ import { ReportService } from '../../services/report.service';
 import { ReportFilterDTO, Report } from '../../../commons/model/entity.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { tuiDropdownAnimation, tuiFadeIn } from '@taiga-ui/core';
-import { AuthStateService } from '../../../auth/services/auth-state.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../auth/services/auth-api.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -13,14 +14,14 @@ import { Router } from '@angular/router';
   animations: [tuiFadeIn, tuiDropdownAnimation]
 })
 export class ReportsComponent implements OnInit {
-  user$ = this.authState.user$;
+  user$ = this.authService.currentUser;
   filterForm!: FormGroup;
   reports: Report[] = [];
   openDropdownId: string | null = null;
 
   constructor(
     public reportService: ReportService,
-    private authState: AuthStateService,
+    private authService: AuthService,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -72,21 +73,24 @@ export class ReportsComponent implements OnInit {
   }
 
   handleUpvote(report: Report): void {
-    if (this.authState.currentUser) {
-      const uid = this.authState.currentUser.uid;
-      const updatedUpvotes = report.upvotes ? [...report.upvotes] : [];
-      
-      if (updatedUpvotes.includes(uid)) {
-        const index = updatedUpvotes.indexOf(uid);
-        updatedUpvotes.splice(index, 1);
+    firstValueFrom(this.user$).then(user => {
+      if (user) {
+        const uid = user.uid;
+        const updatedUpvotes = report.upvotes ? [...report.upvotes] : [];
+        
+        if (updatedUpvotes.includes(uid)) {
+          const index = updatedUpvotes.indexOf(uid);
+          updatedUpvotes.splice(index, 1);
+        } else {
+          updatedUpvotes.push(uid);
+        }
+  
+        this.reportService.updateUpvotes(report.id.toString(), updatedUpvotes, updatedUpvotes.length);
       } else {
-        updatedUpvotes.push(uid);
+        this.router.navigate(['/signin']);
       }
-      this.reportService.updateUpvotes(report.id.toString(), updatedUpvotes, updatedUpvotes.length);
-    } else {
-        this.router.navigate(['/login']);
-    }
-  }  
+    });
+  }
 
   handleDropdownToggled({ reportId, isOpen }: { reportId: string, isOpen: boolean }): void {
     this.openDropdownId = isOpen ? reportId : null;

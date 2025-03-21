@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthApiService } from '../../services/auth-api.service';
+import { AuthService } from '../../services/auth-api.service';
 import { Router } from '@angular/router';
+import { tuiFadeIn } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrl: './signup.component.less'
+  styleUrl: './signup.component.less',
+  animations: [tuiFadeIn]
 })
 export class SignupComponent {
   signupForm: FormGroup;
@@ -14,7 +16,7 @@ export class SignupComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthApiService,
+    private authService: AuthService,
     private router: Router
   ) {
     this.signupForm = this.fb.group({
@@ -44,7 +46,7 @@ export class SignupComponent {
       this.isLoggingIn = true;
       const { firstName, lastName, email, password } = this.signupForm.value;
 
-      this.authService.signup(email, password).subscribe({
+      /* this.authService.signup(email, password).subscribe({
         next: (response) => {
           this.authService.updateProfile(firstName, lastName).subscribe({
             next: () => {
@@ -60,7 +62,7 @@ export class SignupComponent {
           console.error('Signup error:', error);
           this.isLoggingIn = false;
         }
-      });
+      }); */
     }
   }
 }

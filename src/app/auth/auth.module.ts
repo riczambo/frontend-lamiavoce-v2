@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { LoginComponent } from './components/login/login.component';
-import { AuthApiService } from './services/auth-api.service';
+import { SignInComponent } from './components/signin/signin.component';
+import { AuthService } from './services/auth-api.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -13,11 +13,10 @@ import {
 import { TuiAppearance, TuiButton, TuiError, TuiTextfield } from '@taiga-ui/core';
 import { TuiFieldErrorPipe } from '@taiga-ui/kit';
 import { TuiCardLarge, TuiCardMedium, TuiForm } from '@taiga-ui/layout';
-import { TuiValidationError } from '@taiga-ui/cdk/classes';
 
 @NgModule({
   declarations: [
-    LoginComponent,
+    SignInComponent,
     SignupComponent
   ],
   imports: [
@@ -38,10 +37,10 @@ import { TuiValidationError } from '@taiga-ui/cdk/classes';
     ...TuiTextfield
   ],
   exports: [
-    LoginComponent
+    SignInComponent
   ],
   providers: [
-    AuthApiService,
+    AuthService,
   ],
 })
 export class AuthModule { }

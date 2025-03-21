@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthStateService } from '../../../auth/services/auth-state.service';
+import { AuthService } from '../../../auth/services/auth-api.service';
 
 @Component({
   selector: 'app-header',
@@ -7,13 +7,13 @@ import { AuthStateService } from '../../../auth/services/auth-state.service';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent {
-  user$ = this.authState.user$;
+  user$ = this.authService.currentUser;
 
   constructor(
-    private authState: AuthStateService
+    private authService: AuthService
   ) {}
 
   logout(): void {
-    this.authState.logout();
+    this.authService.signOut();
   }
 }
