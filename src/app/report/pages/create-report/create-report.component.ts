@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ReportService } from '../../services/report.service';
 import { TuiResponsiveDialogOptions } from '@taiga-ui/addon-mobile';
 
@@ -25,12 +24,12 @@ export class CreateReportComponent {
     public reportService: ReportService
   ) {
     this.creationReportForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
+      title: ['', [Validators.required, Validators.maxLength(60)]],
+      description: ['', [Validators.required, Validators.maxLength(500)]],
       citizenId: ['', [Validators.required, Validators.pattern('[A-Z0-9]{16}')]],
-      category: ['', Validators.required],
-      zone: ['', Validators.required]
-    });
+      category: ['', [Validators.required]],
+      zone: ['', [Validators.required]]
+    });    
   }
 
   async onSubmit(): Promise<void> {

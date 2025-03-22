@@ -17,7 +17,7 @@ import { TuiButton, TuiIcon, TuiNotification } from '@taiga-ui/core';
     TuiButton,
     FormsModule,
     RouterModule,
-    TuiNotification 
+    TuiNotification
   ],
   exports: [
     HeaderComponent,

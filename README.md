@@ -9,4 +9,6 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ## Future evolutive
 
 - Gestione segnalazione con foto (quindi sia nella creazione che nella visualizzazione in lista)
+    - analisi foto per non far caricare foto con contenuti inappropriati (AI?)
 - Sottoscrizione tramite mail del creatore ad aggiornamenti relativi alla propria segnalazione
+- Aggiungere timestamp al modello Report, in modo tale poi da poter cercare in un range temporale

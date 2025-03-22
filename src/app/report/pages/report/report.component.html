@@ -58,9 +58,14 @@
 
 <tui-data-list class="floating-button" [@tuiFadeIn]>
   <button
-    tuiOption
+    appearance="flat"
     iconStart="@tui.circle-plus"
-    [routerLink]="'/create-report'">
+    size="m"
+    tuiButton
+    type="button"
+    routerLink="/create-report"
+    style="color: var(--primary-color)"
+  >
     Crea
   </button>
 </tui-data-list>

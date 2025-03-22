@@ -57,7 +57,7 @@ import {TuiDropdownMobile, TuiResponsiveDialog} from '@taiga-ui/addon-mobile';
 import { RouterLink } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReportCardComponent } from './components/report-card/report-card.component';
-import { AuthService } from '../auth/services/auth-api.service';
+import { AuthService } from '../auth/services/auth.service';
 
 @NgModule({
   declarations: [

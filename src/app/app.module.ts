@@ -11,7 +11,6 @@ import { ReportModule } from './report/report.module';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { it_IT } from 'ng-zorro-antd/i18n';
@@ -19,6 +18,9 @@ import { registerLocaleData } from '@angular/common';
 import it from '@angular/common/locales/it';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Firestore, getFirestore } from "firebase/firestore";
+import { initializeApp } from 'firebase/app';
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 registerLocaleData(it);
 
@@ -36,7 +38,6 @@ registerLocaleData(it);
 
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
-    AngularFirestoreModule,
     FormsModule,
     TuiRoot
   ],
@@ -45,9 +46,9 @@ registerLocaleData(it);
     provideAnimationsAsync(),
     provideHttpClient(withFetch()),
     { provide: NZ_I18N, useValue: it_IT },
-    provideHttpClient(),
-    NG_EVENT_PLUGINS
-],
+    NG_EVENT_PLUGINS,
+    { provide: Firestore, useFactory: () => getFirestore(initializeApp(environment.firebaseConfig)) }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

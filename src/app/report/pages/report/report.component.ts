@@ -4,7 +4,7 @@ import { ReportFilterDTO, Report } from '../../../commons/model/entity.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { tuiDropdownAnimation, tuiFadeIn } from '@taiga-ui/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../auth/services/auth-api.service';
+import { AuthService } from '../../../auth/services/auth.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({

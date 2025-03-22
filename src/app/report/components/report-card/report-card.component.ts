@@ -14,10 +14,23 @@ export class ReportCardComponent {
   @Output() deleteRequested = new EventEmitter<Report>();
   @Output() upvoteRequested = new EventEmitter<Report>();
   @Output() dropdownToggled = new EventEmitter<{ reportId: string, isOpen: boolean }>();
+  expanded: { [id: number]: boolean } = {};
 
   constructor(
     public reportService: ReportService
   ) {}
+
+  needsTruncate(description: string): boolean {
+    return !!description && description.length > 200;
+  }  
+
+  toggleExpanded(reportId: number): void {
+    this.expanded[reportId] = !this.expanded[reportId];
+  }
+
+  isExpanded(reportId: number): boolean {
+    return this.expanded[reportId] || false;
+  }
 
   toggleDropdown(isOpen: boolean): void {
     this.dropdownToggled.emit({ reportId: this.report.id.toString(), isOpen });

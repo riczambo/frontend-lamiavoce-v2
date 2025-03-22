@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SignInComponent } from './components/signin/signin.component';
-import { AuthService } from './services/auth-api.service';
+import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';

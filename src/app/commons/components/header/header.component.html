@@ -2,9 +2,13 @@
   <h1 class="app-title" routerLink="/reports">RovigoSegnala</h1>
   <div class="header-right">
     <ng-container *ngIf="(user$ | async) as user; else signIn">
-      <button tuiButton>{{ user.displayName?.charAt(0) | uppercase }}
+      <button tuiButton class="avatar">{{ user.displayName?.charAt(0) | uppercase }}
       </button>
-      <button tuiIconButton iconStart="@tui.log-out" (click)="logout()" routerLink="/reports">
+      <button
+        tuiIconButton
+        iconStart="@tui.log-out" 
+        (click)="logout()"
+        routerLink="/reports">
       </button>
     </ng-container>
     <ng-template #signIn>

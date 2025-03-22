@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth-api.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { tuiFadeIn } from '@taiga-ui/core';
 
@@ -45,24 +45,17 @@ export class SignupComponent {
     if (this.signupForm.valid) {
       this.isLoggingIn = true;
       const { firstName, lastName, email, password } = this.signupForm.value;
-
-      /* this.authService.signup(email, password).subscribe({
-        next: (response) => {
-          this.authService.updateProfile(firstName, lastName).subscribe({
-            next: () => {
-              this.router.navigate(['/reports']);
-            },
-            error: (error) => {
-              console.error('Error updating profile:', error);
-              this.isLoggingIn = false;
-            }
-          });
+      const displayName = `${firstName} ${lastName}`.trim();
+  
+      this.authService.signUp(email, password, displayName).subscribe({
+        next: () => {
+          this.router.navigate(['/reports']);
         },
-        error: (error) => {
-          console.error('Signup error:', error);
+        error: (error: any) => {
+          console.error('Errore durante la registrazione:', error);
           this.isLoggingIn = false;
         }
-      }); */
+      });
     }
   }
 }

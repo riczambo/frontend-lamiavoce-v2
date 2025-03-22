@@ -25,7 +25,15 @@
     </div>  
 
     <span tuiTitle class="fade report-title">{{ report.title }}</span>
-    <section class="report-description">{{ report.description }}</section>
+    <section class="report-description">
+        <ng-container *ngIf="!needsTruncate(report.description) || isExpanded(report.id)">
+        {{ report.description }}
+        </ng-container>
+        <ng-container *ngIf="needsTruncate(report.description) && !isExpanded(report.id)">
+        {{ report.description | slice:0:200 }}
+        <span class="continue" (click)="toggleExpanded(report.id)"> Continua...</span>
+        </ng-container>
+    </section>
     <p><strong>Categoria:</strong> {{ report.category }}</p>
     <p><strong>Zona:</strong> {{ report.zone }}</p>
 </div>

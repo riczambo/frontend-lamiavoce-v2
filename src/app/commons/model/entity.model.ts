@@ -5,7 +5,7 @@ export class Report {
   citizenNome: string;
   citizenCognome: string;
   category: string;
-  creationDate: string;
+  creationDate: Date;
   zone: string;
   upvotes: string[];
   upvotesCount: number;
@@ -17,7 +17,7 @@ export class Report {
     citizenNome: string,
     citizenCognome: string,
     category: string,
-    creationDate: string,
+    creationDate: Date,
     zone: string,
     upvotes: string[],
     upvotesCount: number

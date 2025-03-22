@@ -9,7 +9,10 @@ import {
   onAuthStateChanged,
   User,
   setPersistence,
-  browserSessionPersistence
+  browserSessionPersistence,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  validatePassword
 } from "firebase/auth";
 import { initializeApp } from '@angular/fire/app';
 import { environment } from '../../../environments/environment';
@@ -19,7 +22,6 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
-
   private auth = getAuth(initializeApp(environment.firebaseConfig));
   private provider = new GoogleAuthProvider();
   private currentUserSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
@@ -45,8 +47,41 @@ export class AuthService {
     );
   }
 
-  signup(email: string, password: string) {
-    return from(this.fireAuth.createUserWithEmailAndPassword(email, password));
+  signUp(email: string, password: string, displayName: string): Observable<any> {
+    return from(
+      validatePassword(this.auth, password)
+        .then(status => {
+          if (!status.isValid) {
+            console.error("Password non valida. Dettagli:");
+            if (status.containsLowercaseLetter === false) {
+              console.error("- Deve contenere almeno una lettera minuscola.");
+            }
+            if (status.containsUppercaseLetter === false) {
+              console.error("- Deve contenere almeno una lettera maiuscola.");
+            }
+            if (status.containsNumericCharacter === false) {
+              console.error("- Deve contenere almeno un numero.");
+            }
+            if (status.meetsMinPasswordLength === false) {
+              console.error("- Deve avere una lunghezza minima.");
+            }
+            if (status.meetsMaxPasswordLength === false) {
+              console.error("- Supera la lunghezza massima.");
+            }
+  
+            return Promise.reject("La password non soddisfa i requisiti.");
+          }
+  
+          return createUserWithEmailAndPassword(this.auth, email, password);
+        })
+        .then(userCredential => {
+          const user = userCredential.user;
+          return updateProfile(user, { displayName });
+        })
+        .then(() => {
+          console.log("Registrazione e aggiornamento profilo completati!");
+        })
+    );
   }
 
   signInWithGoogle(): Observable<any> {
@@ -55,14 +90,7 @@ export class AuthService {
         return signInWithPopup(this.auth, this.provider);
       }).then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        if (credential) {
-          const token = credential.accessToken;
-          console.log('Access Token:', token);
-        } else {
-          console.warn('Credential is null, token not available');
-        }
         const user = result.user;
-        console.log('User Info:', user);
         return user;
       }).catch((error) => {
         console.error('Error during Google sign-in:', error);

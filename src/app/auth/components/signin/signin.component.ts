@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth-api.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { tuiFadeIn } from '@taiga-ui/core';
 
@@ -13,7 +13,6 @@ import { tuiFadeIn } from '@taiga-ui/core';
 export class SignInComponent {
   
   signInForm: FormGroup;
-  isLoggingIn = false;
 
   constructor(
     private fb: FormBuilder,
@@ -27,7 +26,6 @@ export class SignInComponent {
   }
 
   signIn() {
-    this.isLoggingIn = true;
     if (this.signInForm.valid) {
       this.authService.signIn({
         email: this.signInForm.value.email,
@@ -39,7 +37,9 @@ export class SignInComponent {
   }
 
   signInWithGoogle() {
-    this.authService.signInWithGoogle();
+    this.authService.signInWithGoogle().subscribe({
+      next: () => this.router.navigate(['/reports']),
+      error: (error) => console.error('Errore durante il login con Google:', error),
+    });
   }
-
 }
