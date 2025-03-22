@@ -20,7 +20,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Firestore, getFirestore } from "firebase/firestore";
 import { initializeApp } from 'firebase/app';
-import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 registerLocaleData(it);
 

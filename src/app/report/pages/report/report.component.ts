@@ -64,6 +64,16 @@ export class ReportsComponent implements OnInit {
     this.getReports();
   }
 
+  onCreate(): void {
+    firstValueFrom(this.user$).then(user => {
+      if (user) {
+        this.router.navigate(['/create-report']);
+      } else {
+        this.router.navigate(['/signin']);
+      }
+    });
+  }  
+
   handleDeleteReport(report: Report): void {
     this.reportService.deleteReport(report.id.toString()).then(() => {
       this.getReports();

@@ -6,10 +6,10 @@ import { environment } from './environments/environment';
 
 const app = initializeApp(environment.firebaseConfig);
 
-initializeAppCheck(app, {
+/* initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider(environment.appCheckKey),
   isTokenAutoRefreshEnabled: true
-});
+}); */
 
 platformBrowserDynamic().bootstrapModule(AppModule, {
   ngZoneEventCoalescing: true
